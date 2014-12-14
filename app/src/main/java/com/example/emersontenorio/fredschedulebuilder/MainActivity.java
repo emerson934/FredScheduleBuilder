@@ -1,26 +1,28 @@
 package com.example.emersontenorio.fredschedulebuilder;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.Gravity;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import android.widget.ImageView;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
-public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -36,6 +38,32 @@ public class MainActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Image Downloading and Fetching
+        new Thread() {
+            public void run() {
+                try {
+                    URL url = new URL("http://wanderingoak.net/bridge.png");
+                    HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+
+                    if (httpCon.getResponseCode() != 200) {
+                        throw new Exception("Failed to Connect");
+                    }
+
+                    InputStream is = httpCon.getInputStream();
+                    final Bitmap bitmap = BitmapFactory.decodeStream(is);
+                    MainActivity.this.runOnUiThread(new Runnable() {
+                        public void run() {
+                            ImageView iv = (ImageView) findViewById(R.id.main_image);
+                            iv.setImageBitmap(bitmap);
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.e("Image", " Failed to load image", e);
+                }
+            }
+        }.start();
+        //Ending Downloading and Fetching Image
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -116,6 +144,9 @@ public class MainActivity extends ActionBarActivity
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
+        public PlaceholderFragment() {
+        }
+
         /**
          * Returns a new instance of this fragment for the given section
          * number.
@@ -128,14 +159,11 @@ public class MainActivity extends ActionBarActivity
             return fragment;
         }
 
-        public PlaceholderFragment() {
-        }
-
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
+//            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            return inflater.inflate(R.layout.fragment_main, container, false);//rootView;
         }
 
         @Override
@@ -146,4 +174,56 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
+
+    /**
+     * Created by Marcos Souza on 12/12/2014.
+     */
+//    public class UpdateApp extends AsyncTask<String, Integer, Bitmap> {
+//        @Override
+//        protected void onPreExecute() {
+//            //Setup
+//            super.onPreExecute();
+//        }
+//
+//        @Override
+//        protected Bitmap doInBackground(String... params) {
+//            try {
+//                URL url = new URL(params[0]);
+//                HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+//
+//                if (httpCon.getResponseCode() != 200) {
+//                    throw new Exception("Failed to Connect");
+//                }
+//
+//                InputStream is = httpCon.getInputStream();
+//                return BitmapFactory.decodeStream(is);
+//            } catch (Exception e) {
+//                Log.e("Image", " Failed to load image", e);
+//            }
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onProgressUpdate(Integer... values) {
+//            //Update a progress bar
+//            super.onProgressUpdate(values);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Bitmap img) {
+//            ImageView iv = (ImageView) findViewById(R.id.main_image);
+//            if(iv!=null && img!=null){
+//                iv.setImageBitmap(img);
+//            }
+//        }
+//
+//        @Override
+//        protected void onCancelled() {
+//            //Handle what to do if you cancel this task
+//            //You should not be able to cancel this task anyway
+//            super.onCancelled();
+//        }
+//    }
 }
+
+
