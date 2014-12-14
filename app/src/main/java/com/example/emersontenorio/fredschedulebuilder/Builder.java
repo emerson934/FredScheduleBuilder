@@ -6,32 +6,48 @@ import android.text.format.Time;
  * Created by Marcos Souza on 12/14/2014.
  */
 public class Builder {
+    private Course[] courses = new Course[10];
+    private int nCourses = 0;
 
-    public Course[] scheduleBuilder(Course []courses){
-        //set all classes with no time conflicts at first.
-
-
+    public Course[] getCourses(){
         return courses;
+    }
+
+    public void setCourse(Course course){
+        courses[nCourses] = course;
+        nCourses++;
+    }
+
+    public String addClass(Course course){
+        boolean conflict = false;
+        int[] conflictWith = new int[courses.length];
+        int pos =0;
+        for (int i = 0; i < courses.length; i++) {
+            if ((timeConflict(courses[i].startTime, courses[i].endTime, course.startTime, course.endTime))){
+                conflict = true;
+                conflictWith[pos] = i;
+                pos++;
+            }
+        }
+//9347
+        if (conflict){
+            String returned = "Time Conflict With:";
+            for (int i = 0; i < pos; i++) {
+                returned += " " + conflictWith[i];
+            }
+            return returned;
+        } else{
+            setCourse(course);
+            return "Class Added Successfully!";
+        }
     }
 
     //Tests if there is a time conflict
     public boolean timeConflict(Time startTime1, Time endTime1, Time startTime2, Time endTime2){
         if (startTime1.before(startTime2)){
-            if(endTime1.before(startTime2)){
-                //No Time Conflict
-                return false;
-            } else{
-                //Time conflict, where 2nd class starts before 1st class ends
-                return true;
-            }
+            return !endTime1.before(startTime2);
         } else if(startTime2.before(startTime1)){
-            if (endTime2.before(startTime1)){
-                //No Time Conflict
-                return false;
-            } else{
-                //Time conflict, where 1st class starts before 2nd class ends
-                return true;
-            }
+            return !endTime2.before(startTime1);
         } else{
             //Time conflict, where 1st class and 2nd class start at the same time
             return true;
