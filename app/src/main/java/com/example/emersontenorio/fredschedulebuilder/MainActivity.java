@@ -9,13 +9,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -73,6 +76,40 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+
+        String[] daysA = new String[]{"M", "W", "F"};
+        String[] daysB = new String[]{"M", "W", "F"};
+        String[] daysC = new String[]{"M", "W", "F"};
+
+        final Course courseA = new Course(830, 1030, daysA);
+        final Course courseB = new Course(1040, 1150, daysB);
+        final Course courseC = new Course(1140, 1230, daysC);
+
+        Button btnA = (Button) findViewById(R.id.btnA);
+        btnA.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                String resultA = Builder.addClass(courseA);
+                Toast.makeText(getBaseContext(), resultA, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button btnB = (Button) findViewById(R.id.btnB);
+        btnB.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                String resultB = Builder.addClass(courseB);
+                Toast.makeText(getBaseContext(), resultB, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button btnC = (Button) findViewById(R.id.btnC);
+        btnC.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                String resultC = Builder.addClass(courseC);
+                Toast.makeText(getBaseContext(), resultC, Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override

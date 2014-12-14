@@ -14,6 +14,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Class A"
+            android:id="@+id/btnA"
+            android:layout_gravity="left|center_vertical" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Class B"
+            android:id="@+id/btnB"
+            android:layout_gravity="center" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Class C"
+            android:id="@+id/btnC"
+            android:layout_gravity="right|center_vertical" />
     </FrameLayout>
 
     <!-- android:layout_gravity="start" tells DrawerLayout to treat
