@@ -22,11 +22,13 @@ public class Builder {
         boolean conflict = false;
         int[] conflictWith = new int[courses.length];
         int pos =0;
-        for (int i = 0; i < courses.length; i++) {
-            if ((timeConflict(courses[i].startTime, courses[i].endTime, courses[i].days, course.startTime, course.endTime, course.days))){
-                conflict = true;
-                conflictWith[pos] = i;
-                pos++;
+        if (nCourses > 0) {
+            for (int i = 0; i < nCourses; i++) {
+                if ((timeConflict(courses[i].startTime, courses[i].endTime, courses[i].days, course.startTime, course.endTime, course.days))) {
+                    conflict = true;
+                    conflictWith[pos] = i;
+                    pos++;
+                }
             }
         }
 //9347
