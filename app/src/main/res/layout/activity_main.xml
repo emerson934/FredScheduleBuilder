@@ -18,44 +18,16 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Class A"
-            android:id="@+id/btnA"
-            android:layout_gravity="left|center_vertical" />
+            android:text="Auto Generate Schedule"
+            android:id="@+id/btnRandom"
+            android:layout_gravity="center_horizontal|bottom" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Class B"
-            android:id="@+id/btnB"
+            android:text="Search"
+            android:id="@+id/btnSearch"
             android:layout_gravity="center" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Class C"
-            android:id="@+id/btnC"
-            android:layout_gravity="right|center_vertical" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Class D"
-            android:id="@+id/btnD"
-            android:layout_gravity="left|top" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Class E"
-            android:id="@+id/btnE"
-            android:layout_gravity="center_horizontal|top" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Class F"
-            android:id="@+id/btnF"
-            android:layout_gravity="right|top" />
     </FrameLayout>
 
     <!-- android:layout_gravity="start" tells DrawerLayout to treat

@@ -8,14 +8,18 @@ import android.text.format.Time;
 public class Course {
     //time in military code
     //0900, 1200, etc.
+    String name;
     int startTime;
     int endTime;
     String []days;
+    String subject;
 
-    public Course(int start, int end, String[] day){
+    public Course(int start, int end, String[] day, String subj, String nam){
         startTime = start;
         endTime = end;
         days = day;
+        subject = subj;
+        name = nam;
     }
 
 
