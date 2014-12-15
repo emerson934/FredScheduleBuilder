@@ -23,6 +23,7 @@ import android.widget.Toast;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -146,11 +147,11 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         btnRandom.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Builder.generateRandomSchedules(100, 2300, allDays, "CSIT");
-                Course[] classes = Builder.getCourses();
+                ArrayList<Course> classes = Builder.getCourses();
                 int scheduleSize = Builder.getNumberCourses();
                 for (int i = 0; i < scheduleSize; i++) {
-                    if (classes[i].name != null){
-                        Toast.makeText(getBaseContext(), classes[i].name + " in: " + i, Toast.LENGTH_SHORT).show();
+                    if (classes.get(i).name != null){
+                        Toast.makeText(getBaseContext(), classes.get(i).name + " in: " + i, Toast.LENGTH_SHORT).show();
                     } else{
                         Toast.makeText(getBaseContext(), "Name null in: " + i, Toast.LENGTH_SHORT).show();
                     }
