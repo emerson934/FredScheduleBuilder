@@ -1,6 +1,6 @@
 package com.example.emersontenorio.fredschedulebuilder;
 
-import android.text.format.Time;
+import android.util.Log;
 
 /**
  * Created by Marcos Souza on 12/14/2014.
@@ -12,6 +12,7 @@ public class Builder {
     public static Course[] getCourses(){
         return courses;
     }
+    public static int getNumberCourses(){return nCourses;}
 
     public static void setCourse(Course course){
         courses[nCourses] = course;
@@ -22,8 +23,9 @@ public class Builder {
         boolean conflict = false;
         int[] conflictWith = new int[courses.length];
         int pos =0;
-        if (nCourses > 0) {
-            for (int i = 0; i < nCourses; i++) {
+        if (nCourses > 0 && nCourses < 10) {
+            for (int i = 0; i < 0; i++) {
+                System.out.println("Position: "+ i);
                 if ((timeConflict(courses[i].startTime, courses[i].endTime, courses[i].days, course.startTime, course.endTime, course.days))) {
                     conflict = true;
                     conflictWith[pos] = i;
@@ -31,7 +33,7 @@ public class Builder {
                 }
             }
         }
-//9347
+
         if (conflict){
             String returned = "Time Conflict With:";
             for (int i = 0; i < pos; i++) {
@@ -84,37 +86,132 @@ public class Builder {
 //            return true;
 //        }
     }
+//    Test BD, Test Method
+    public static Course[] filterCourses(int start, int end, String[] days, String subject){
+        String[] daysA = new String[]{"M", "W", "F"};
+        String[] daysB = new String[]{"M", "W", "F"};
+        String[] daysC = new String[]{"M", "W", "F"};
+        String[] daysD = new String[]{"T", "TH"};
+        String[] daysE = new String[]{"T", "TH"};
+        String[] daysF = new String[]{"T", "TH"};
 
-    //Takes all classes with no time conflicts
-//    public Course[] setAllNoTimeConflict(Course []courses){
-//        Course[] noConflictCourses;
-//        int size = 0;
-//        int[] noConflictIndexes = new int[courses.length];
-//        for(int i=0; i < courses.length - 1; i++){
-//            boolean conflict = false;
-//            for (int j = i; j < courses.length; j++) {
-//                if (timeConflict(courses[i].startTime, courses[i].endTime, courses[j].startTime, courses[i].endTime)){
-//                    conflict = true;
-//                    break;
-//                }
+        final Course courseA = new Course(830, 1030, daysA, "CSIT", "Course A");
+        final Course courseB = new Course(1040, 1150, daysB, "CSIT", "Course B");
+        final Course courseC = new Course(1140, 1230, daysC, "CSIT", "Course C");
+        final Course courseD = new Course(830, 1030, daysD, "CSIT", "Course D");
+        final Course courseE = new Course(1040, 1150, daysE, "CSIT", "Course E");
+        final Course courseF = new Course(1140, 1230, daysF, "SPAN", "Course F");
+
+        Course[] classes = {courseA, courseB, courseC, courseD, courseE, courseF};
+        int size = classes.length;
+        //number of filter passed through parameters
+        int nFilters = 4; //start = 0, end = 1, days = 2, subject = 3
+        boolean[][] checkingParams = new boolean[size][nFilters];
+        //filling boolean matriz
+        for (int i = 0; i < size; i++) {
+            if(classes[i].startTime > start){
+                checkingParams[i][0] = true;
+            } else{
+                checkingParams[i][0] = false;
+            }
+
+            if(classes[i].endTime < end){
+                checkingParams[i][1] = true;
+            } else{
+                checkingParams[i][1] = false;
+            }
+            //test
+            checkingParams[i][2] = true;
+
+//            for (int j = 0; j < days.length; j++) {
+//                //To think about it
 //            }
-//            if (!conflict){
-//                noConflictIndexes[size] = i;
-//                size++;
-//            }
-//        }
-//        if(size > 0){
-//            noConflictCourses = new Course[size];
-//            for (int i = 0; i < size; i++) {
-//                noConflictCourses[i] = courses[noConflictIndexes[i]];
-//            }
-//            return noConflictCourses;
-//        } else{
-//            return null;
-//        }
-//    }
+
+            if (classes[i].subject.equals(subject)){
+                checkingParams[i][3] = true;
+            } else{
+                checkingParams[i][3] = false;
+            }
+        }
+
+        int[] classesIndexes = new int[size];
+        int pos = 0;
+
+        for (int i = 0; i < size; i++) {
+            boolean match = true;
+            for (int j = 0; j < nFilters; j++) {
+                if(!(checkingParams[i][j])){
+                    match = false;
+                }
+            }
+            if(match){
+                classesIndexes[pos] = i;
+                pos++;
+            }
+        }
+
+        Course[] classesFound = new Course[pos];
+        for (int i = 0; i < pos; i++) {
+            classesFound[i] = classes[classesIndexes[i]];
+        }
+
+        return classesFound;
+    }
+
+    public static void generateRandomSchedules(int start, int end, String[] days, String subject){
+        //filtrar as disciplina com os requerimentos
+        Course[] coursesFound = filterCourses(start, end, days, subject);
+        if(coursesFound != null){
+            int resp = setAllNoTimeConflict(coursesFound);
+            int times=0;
+            while((resp < 6) && (times < 3)){
+                resp = removeConflict(coursesFound);
+                times++;
+            }
+        }
+    }
 
 
+    public static int removeConflict(Course[] course){
+        int indMax = setConflictList(course);
+        course[indMax] = null;
+        return setAllNoTimeConflict(course);
+    }
 
+    private static int[] conflictList = new int[10];
+    public static int setConflictList(Course []course){
+        int maxSize = 0;
+        int indMax = 0;
+        for (int i = 0; i < nCourses; i++) {
+            int size = 0;
+            for(int j=0; j < course.length; j++){
+                if(timeConflict(courses[i].startTime,courses[i].endTime, courses[i].days, course[i].startTime,course[i].endTime, course[i].days)){
+                    size++;
+                }
+            }
+            conflictList[i] = size;
+            if(size > maxSize){
+                maxSize = size;
+                indMax = i;
+            }
+        }
+        return indMax;
+    }
 
+//    Takes all classes with no time conflicts
+    public static int setAllNoTimeConflict(Course []course){
+        int size = nCourses;
+        for(int i=0; i < course.length; i++){
+            String response = addClass(course[i]);
+            if (response.equals("Class Added Successfully!")){
+                size++;
+                if(size >9){
+                    break;
+                }
+            } else{
+
+            }
+        }
+        return size;
+    }
 }

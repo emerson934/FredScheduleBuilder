@@ -85,60 +85,80 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         String[] daysE = new String[]{"T", "TH"};
         String[] daysF = new String[]{"T", "TH"};
 
-        final Course courseA = new Course(830, 1030, daysA);
-        final Course courseB = new Course(1040, 1150, daysB);
-        final Course courseC = new Course(1140, 1230, daysC);
-        final Course courseD = new Course(830, 1030, daysD);
-        final Course courseE = new Course(1040, 1150, daysE);
-        final Course courseF = new Course(1140, 1230, daysF);
+        final String[] allDays = new String[]{"M", "W", "F", "T", "TH"};
 
-        Button btnA = (Button) findViewById(R.id.btnA);
-        btnA.setOnClickListener(new View.OnClickListener(){
+//        final Course courseA = new Course(830, 1030, daysA);
+//        final Course courseB = new Course(1040, 1150, daysB);
+//        final Course courseC = new Course(1140, 1230, daysC);
+//        final Course courseD = new Course(830, 1030, daysD);
+//        final Course courseE = new Course(1040, 1150, daysE);
+//        final Course courseF = new Course(1140, 1230, daysF);
+//
+//        Button btnA = (Button) findViewById(R.id.btnA);
+//        btnA.setOnClickListener(new View.OnClickListener(){
+//            public void onClick(View v){
+//                String resultA = Builder.addClass(courseA);
+//                Toast.makeText(getBaseContext(), resultA, Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        Button btnB = (Button) findViewById(R.id.btnB);
+//        btnB.setOnClickListener(new View.OnClickListener(){
+//            public void onClick(View v){
+//                String resultB = Builder.addClass(courseB);
+//                Toast.makeText(getBaseContext(), resultB, Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        Button btnC = (Button) findViewById(R.id.btnC);
+//        btnC.setOnClickListener(new View.OnClickListener(){
+//            public void onClick(View v){
+//                String resultC = Builder.addClass(courseC);
+//                Toast.makeText(getBaseContext(), resultC, Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        Button btnD = (Button) findViewById(R.id.btnD);
+//        btnD.setOnClickListener(new View.OnClickListener(){
+//            public void onClick(View v){
+//                String resultD = Builder.addClass(courseD);
+//                Toast.makeText(getBaseContext(), resultD, Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        Button btnE = (Button) findViewById(R.id.btnE);
+//        btnE.setOnClickListener(new View.OnClickListener(){
+//            public void onClick(View v){
+//                String resultE = Builder.addClass(courseE);
+//                Toast.makeText(getBaseContext(), resultE, Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        Button btnF = (Button) findViewById(R.id.btnF);
+//        btnF.setOnClickListener(new View.OnClickListener(){
+//            public void onClick(View v){
+//                String resultF = Builder.addClass(courseF);
+//                Toast.makeText(getBaseContext(), resultF, Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+        Button btnRandom = (Button) findViewById(R.id.btnRandom);
+        btnRandom.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                String resultA = Builder.addClass(courseA);
-                Toast.makeText(getBaseContext(), resultA, Toast.LENGTH_SHORT).show();
+                Builder.generateRandomSchedules(100, 2300, allDays, "CSIT");
+                Course[] classes = Builder.getCourses();
+                int scheduleSize = Builder.getNumberCourses();
+                for (int i = 0; i < scheduleSize; i++) {
+                    if (classes[i].name != null){
+                        Toast.makeText(getBaseContext(), classes[i].name + " in: " + i, Toast.LENGTH_SHORT).show();
+                    } else{
+                        Toast.makeText(getBaseContext(), "Name null in: " + i, Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
 
-        Button btnB = (Button) findViewById(R.id.btnB);
-        btnB.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                String resultB = Builder.addClass(courseB);
-                Toast.makeText(getBaseContext(), resultB, Toast.LENGTH_SHORT).show();
-            }
-        });
 
-        Button btnC = (Button) findViewById(R.id.btnC);
-        btnC.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                String resultC = Builder.addClass(courseC);
-                Toast.makeText(getBaseContext(), resultC, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        Button btnD = (Button) findViewById(R.id.btnD);
-        btnD.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                String resultD = Builder.addClass(courseD);
-                Toast.makeText(getBaseContext(), resultD, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        Button btnE = (Button) findViewById(R.id.btnE);
-        btnE.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                String resultE = Builder.addClass(courseE);
-                Toast.makeText(getBaseContext(), resultE, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        Button btnF = (Button) findViewById(R.id.btnF);
-        btnF.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                String resultF = Builder.addClass(courseF);
-                Toast.makeText(getBaseContext(), resultF, Toast.LENGTH_SHORT).show();
-            }
-        });
 
         //End of Test
 
