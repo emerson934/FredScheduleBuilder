@@ -117,7 +117,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         });
 
         Button btnD = (Button) findViewById(R.id.btnD);
-        btnA.setOnClickListener(new View.OnClickListener(){
+        btnD.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 String resultD = Builder.addClass(courseD);
                 Toast.makeText(getBaseContext(), resultD, Toast.LENGTH_SHORT).show();
@@ -125,7 +125,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         });
 
         Button btnE = (Button) findViewById(R.id.btnE);
-        btnB.setOnClickListener(new View.OnClickListener(){
+        btnE.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 String resultE = Builder.addClass(courseE);
                 Toast.makeText(getBaseContext(), resultE, Toast.LENGTH_SHORT).show();
@@ -133,7 +133,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         });
 
         Button btnF = (Button) findViewById(R.id.btnF);
-        btnC.setOnClickListener(new View.OnClickListener(){
+        btnF.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 String resultF = Builder.addClass(courseF);
                 Toast.makeText(getBaseContext(), resultF, Toast.LENGTH_SHORT).show();
