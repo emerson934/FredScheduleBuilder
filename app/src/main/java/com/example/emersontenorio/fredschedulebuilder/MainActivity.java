@@ -77,14 +77,20 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-
+        //Start test
         String[] daysA = new String[]{"M", "W", "F"};
         String[] daysB = new String[]{"M", "W", "F"};
         String[] daysC = new String[]{"M", "W", "F"};
+        String[] daysD = new String[]{"T", "TH"};
+        String[] daysE = new String[]{"T", "TH"};
+        String[] daysF = new String[]{"T", "TH"};
 
         final Course courseA = new Course(830, 1030, daysA);
         final Course courseB = new Course(1040, 1150, daysB);
         final Course courseC = new Course(1140, 1230, daysC);
+        final Course courseD = new Course(830, 1030, daysD);
+        final Course courseE = new Course(1040, 1150, daysE);
+        final Course courseF = new Course(1140, 1230, daysF);
 
         Button btnA = (Button) findViewById(R.id.btnA);
         btnA.setOnClickListener(new View.OnClickListener(){
@@ -109,6 +115,32 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
                 Toast.makeText(getBaseContext(), resultC, Toast.LENGTH_SHORT).show();
             }
         });
+
+        Button btnD = (Button) findViewById(R.id.btnD);
+        btnA.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                String resultD = Builder.addClass(courseD);
+                Toast.makeText(getBaseContext(), resultD, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button btnE = (Button) findViewById(R.id.btnE);
+        btnB.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                String resultE = Builder.addClass(courseE);
+                Toast.makeText(getBaseContext(), resultE, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button btnF = (Button) findViewById(R.id.btnF);
+        btnC.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                String resultF = Builder.addClass(courseF);
+                Toast.makeText(getBaseContext(), resultF, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //End of Test
 
     }
 
