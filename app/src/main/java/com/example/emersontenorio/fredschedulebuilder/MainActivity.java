@@ -143,6 +143,13 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 //            }
 //        });
 
+        Button btnSearch = (Button) findViewById(R.id.btnSearch);
+        btnSearch.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                setContentView(R.layout.search);
+            }
+        });
+
         Button btnRandom = (Button) findViewById(R.id.btnRandom);
         btnRandom.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
