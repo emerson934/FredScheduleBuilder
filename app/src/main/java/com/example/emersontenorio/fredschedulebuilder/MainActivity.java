@@ -63,29 +63,29 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         setContentView(R.layout.activity_main);
 
         //Image Downloading and Fetching
-        new Thread() {
-            public void run() {
-                try {
-                    URL url = new URL("http://wanderingoak.net/bridge.png");
-                    HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-
-                    if (httpCon.getResponseCode() != 200) {
-                        throw new Exception("Failed to Connect");
-                    }
-
-                    InputStream is = httpCon.getInputStream();
-                    final Bitmap bitmap = BitmapFactory.decodeStream(is);
-                    MainActivity.this.runOnUiThread(new Runnable() {
-                        public void run() {
-                            ImageView iv = (ImageView) findViewById(R.id.main_image);
-                            iv.setImageBitmap(bitmap);
-                        }
-                    });
-                } catch (Exception e) {
-                    Log.e("Image", " Failed to load image", e);
-                }
-            }
-        }.start();
+//        new Thread() {
+//            public void run() {
+//                try {
+//                    URL url = new URL("http://wanderingoak.net/bridge.png");
+//                    HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+//
+//                    if (httpCon.getResponseCode() != 200) {
+//                        throw new Exception("Failed to Connect");
+//                    }
+//
+//                    InputStream is = httpCon.getInputStream();
+//                    final Bitmap bitmap = BitmapFactory.decodeStream(is);
+//                    MainActivity.this.runOnUiThread(new Runnable() {
+//                        public void run() {
+//                            ImageView iv = (ImageView) findViewById(R.id.main_image);
+//                            iv.setImageBitmap(bitmap);
+//                        }
+//                    });
+//                } catch (Exception e) {
+//                    Log.e("Image", " Failed to load image", e);
+//                }
+//            }
+//        }.start();
         //Ending Downloading and Fetching Image
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -189,9 +189,10 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         Button btnRandom = (Button) findViewById(R.id.btnRandom);
         btnRandom.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Builder.generateRandomSchedules(100, 2300, allDays, "CSIT");
-                ArrayList<Course> classes = Builder.getCourses();
-                int scheduleSize = Builder.getNumberCourses();
+                Builder builder = new Builder(getBaseContext());
+                builder.generateRandomSchedules(100, 2300, allDays, "CSIT");
+                ArrayList<Course> classes = builder.getCourses();
+                int scheduleSize = builder.getNumberCourses();
                 for (int i = 0; i < scheduleSize; i++) {
                     if (classes.get(i).name != null){
                         Toast.makeText(getBaseContext(), classes.get(i).name + " in: " + i, Toast.LENGTH_SHORT).show();

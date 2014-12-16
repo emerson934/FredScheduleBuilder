@@ -1,5 +1,10 @@
 package com.example.emersontenorio.fredschedulebuilder;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.text.TextUtils;
+import android.widget.ListView;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -7,6 +12,12 @@ import java.util.Arrays;
  * Created by Marcos Souza on 12/14/2014.
  */
 public class Builder {
+    static Context context;// = getBaseContext();
+
+    public Builder(Context context){
+        this.context = context;
+    }
+
     private static ArrayList<Course> courses = new ArrayList<>();
 //    private static Course[] courses = new Course[10];
     private static int nCourses = 0;
@@ -26,7 +37,7 @@ public class Builder {
         int[] conflictWith = new int[courses.size()];
 //        int[] conflictWith = new int[courses.length];
         int pos =0;
-        if (nCourses > 0 && nCourses < 10) {
+        if (nCourses > 0 ) {
             for (int i = 0; i < nCourses; i++) {
                 System.out.println("Position: "+ i);
                 if ((timeConflict(courses.get(i).startTime, courses.get(i).endTime, courses.get(i).days, course.startTime, course.endTime, course.days))) {
@@ -34,6 +45,7 @@ public class Builder {
                     conflict = true;
                     conflictWith[pos] = i;
                     pos++;
+                    System.out.println("Conflict in: "+ i);
                 }
             }
         }
@@ -92,25 +104,118 @@ public class Builder {
     }
 //    Test BD, Test Method
     public static ArrayList<Course> filterCourses(int start, int end, String[] days, String subject){
-        String[] daysA = new String[]{"M", "W", "F"};
-        String[] daysB = new String[]{"M", "W", "F"};
-        String[] daysC = new String[]{"M", "W", "F"};
-        String[] daysD = new String[]{"T", "TH"};
-        String[] daysE = new String[]{"T", "TH"};
-        String[] daysF = new String[]{"T", "TH"};
 
-        final Course courseA = new Course(830, 1030, daysA, "CSIT", "Course A");
-        final Course courseB = new Course(1040, 1150, daysB, "CSIT", "Course B");
-        final Course courseC = new Course(1140, 1230, daysC, "CSIT", "Course C");
-        final Course courseD = new Course(830, 1030, daysD, "CSIT", "Course D");
-        final Course courseE = new Course(1040, 1150, daysE, "CSIT", "Course E");
-        final Course courseF = new Course(1140, 1230, daysF, "SPAN", "Course F");
+        DBAdapter myDataBase = new DBAdapter(context);
 
-        final Course courseG = new Course(1240, 1250, daysC, "CSIT", "Course G");
-        final Course courseH = new Course(1300, 1330, daysD, "CSIT", "Course H");
-        final Course courseI = new Course(1400, 1450, daysE, "CSIT", "Course I");
+        ArrayList<Course> classes = new ArrayList<Course>();
 
-        ArrayList<Course> classes = new ArrayList<>(Arrays.asList(courseA, courseB, courseC, courseD, courseE, courseF, courseG, courseH, courseI));
+        myDataBase.open();
+
+        Cursor cursor = myDataBase.getAllRecords();
+//final Course courseA = new Course(830, 1030, daysA, "CSIT", "Course A");
+        if(cursor != null) {
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    int startTime = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_START_TIME)));
+                    int endTime = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_END_TIME)));
+
+                    int monday1 =    Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SUNDAY)));
+                    int tuesday1 =   Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_MONDAY)));
+                    int wednesday1 = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_TUESDAY)));
+                    int thursday1 =  Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_WEDNESDAY)));
+                    int friday1 =    Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_THURSDAY)));
+                    int saturday1 =  Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_FRIDAY)));
+                    int sunday1 =    Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SATURDAY)));
+
+                    System.out.println("Monday1  " + monday1);
+                    System.out.println("tuesday1  " + tuesday1);
+                    System.out.println("wednesday1  " + wednesday1);
+                    System.out.println("thursday1  " + thursday1);
+                    System.out.println("friday1  " + friday1);
+                    System.out.println("saturday1  " + saturday1);
+                    System.out.println("sunday1  " + sunday1);
+
+                    String[] day;
+                    String week = "";
+                    int counter = 0;
+
+                    if (monday1 == 1){
+                        System.out.println("Monday True ");
+                        week += "M ";
+                        counter++;
+                    }
+                    if (tuesday1 ==1){
+                        System.out.println("Tuedasy True ");
+                        week += " T ";
+                        counter++;
+                    }
+                    if (wednesday1 ==1){
+                        System.out.println("Wednesday True ");
+                        week += " W ";
+                        counter++;
+                    }
+                    if (thursday1 == 1){
+                        System.out.println("Thurdays True ");
+                        week += " R ";
+                        counter++;
+                    }
+                    if (friday1 == 1){
+                        System.out.println("Friday True ");
+                        week += " F ";
+                        counter++;
+                    }
+                    if (saturday1 == 1){
+                        System.out.println("Saturday True ");
+                        week += " S ";
+                        counter++;
+                    }
+                    if (sunday1 == 1){
+                        System.out.println("Sunday True ");
+                        week += " U ";
+                        counter++;
+                    }
+
+                    System.out.println("Week =  " + week);
+                    day = TextUtils.split(week, " ");
+
+                    for (int i = 0; i < day.length; i++) {
+                        System.out.println("day["+ i +"] =  " + day[i]);
+                    }
+
+                    String subj = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SUBJECT));
+                    String title = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_TITLE));
+
+                    Course courseA = new Course(startTime, endTime, day, subj, title);
+
+                    //Marcos
+                    classes.add(courseA);//Marcos
+                    cursor.moveToNext();
+                }
+            }
+            cursor.close();
+        }
+        myDataBase.close();
+
+
+//        String[] daysA = new String[]{"M", "W", "F"};
+//        String[] daysB = new String[]{"M", "W", "F"};
+//        String[] daysC = new String[]{"M", "W", "F"};
+//        String[] daysD = new String[]{"T", "TH"};
+//        String[] daysE = new String[]{"T", "TH"};
+//        String[] daysF = new String[]{"T", "TH"};
+//
+//        final Course courseA = new Course(830, 1030, daysA, "CSIT", "Course A");
+//        final Course courseB = new Course(1040, 1150, daysB, "CSIT", "Course B");
+//        final Course courseC = new Course(1140, 1230, daysC, "CSIT", "Course C");
+//        final Course courseD = new Course(830, 1030, daysD, "CSIT", "Course D");
+//        final Course courseE = new Course(1040, 1150, daysE, "CSIT", "Course E");
+//        final Course courseF = new Course(1140, 1230, daysF, "SPAN", "Course F");
+//
+//        final Course courseG = new Course(1240, 1250, daysC, "CSIT", "Course G");
+//        final Course courseH = new Course(1300, 1330, daysD, "CSIT", "Course H");
+//        final Course courseI = new Course(1400, 1450, daysE, "CSIT", "Course I");
+
+        //ArrayList<Course> classes = new ArrayList<>(Arrays.asList(courseA, courseB, courseC, courseD, courseE, courseF, courseG, courseH, courseI));
         int size = classes.size();
         //number of filter passed through parameters
         int nFilters = 4; //start = 0, end = 1, days = 2, subject = 3
@@ -204,7 +309,7 @@ public class Builder {
             String response = addClass(course.get(i));
             if (response.equals("Class Added Successfully!")){
                 size++;
-                if(size >9){
+                if(size >20){
                     break;
                 }
             } //else{

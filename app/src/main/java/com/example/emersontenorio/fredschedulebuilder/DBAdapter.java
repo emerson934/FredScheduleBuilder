@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * Created by Emerson Tenorio on 12/14/2014.
  */
 public class DBAdapter {
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 6;
     public static final String DATABASE_NAME = "scheduledb.sqlite";
     public static final String TABLE_NAME = "course";
 
