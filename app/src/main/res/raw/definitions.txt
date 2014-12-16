@@ -35,8 +35,8 @@
 15356 - CSIT - 425 - 01 - 3 - Software Engineering - Scialdone, Michael John - 1700 - 1820  - TR
 19166 - CSIT - 425 - 02 - 3 - Software Engineering - Scialdone, Michael John - 1400 - 1520  - TR
 18914 - CSIT - 431 - 01 - 3 - Intro Operating Systems - Olson, Robert B W - 1700 - 1930  - M
-10314 - CSIT - 435 - 01 - 3 - Data Comm/Networks II - Tsetse, Anthony Kofi - 1100 - 1150  - MWF
-17344 - CSIT - 455 - 01 - 3 - Relational/Object Databases - Tsetse, Anthony Kofi - 800 - 850 - MWF
-18913 - CSIT - 456 - 01 - 3 - Info/Decision Support Systems - Nazarenko, Natalie A - 1300 - 1350 - MWF
+10314 - CSIT - 435 - 01 - 3 - Data Comm Networks II - Tsetse, Anthony Kofi - 1100 - 1150  - MWF
+17344 - CSIT - 455 - 01 - 3 - Relational Object Databases - Tsetse, Anthony Kofi - 800 - 850 - MWF
+18913 - CSIT - 456 - 01 - 3 - Info Decision Support Systems - Nazarenko, Natalie A - 1300 - 1350 - MWF
 19067 - CSIT - 496 - 02 - 3 - SpTp: Ethical Hacking - Olson, Robert B W	 - 1500 - 1550 - MWF
 19167 - CSIT - 496 - 03 - 3 - SpTp: Ethical Hacking - Olson, Robert B W - 1200 - 1250 - MWF

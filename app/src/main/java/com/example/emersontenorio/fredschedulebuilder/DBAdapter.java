@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * Created by Emerson Tenorio on 12/14/2014.
  */
 public class DBAdapter {
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "scheduledb.sqlite";
     public static final String TABLE_NAME = "course";
 
@@ -92,7 +92,7 @@ public class DBAdapter {
             db.execSQL(CREATE_TABLE);
 
 //            open();
-            //loadDictionary();//edited Marcos
+//            loadDictionary();//edited Marcos
 //            close();
         }
 
@@ -118,6 +118,7 @@ public class DBAdapter {
                 try {
 //                        open();
                     loadWords();
+                    Toast.makeText(context, "Database Updated", Toast.LENGTH_SHORT).show();
 //                        close();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -135,7 +136,7 @@ public class DBAdapter {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] strings = TextUtils.split(line, "-");
-                if (strings.length < 2) continue;
+                if (strings.length < 10) continue;
 
                 int index = 9;//change to 10 if you enter the course description
                 int size = strings[/*10*/index].length();
@@ -164,7 +165,7 @@ public class DBAdapter {
                     }
                 }
 
-                long id = addWord(Integer.parseInt(strings[0].trim()),//crn
+                long id = insertRecord(Integer.parseInt(strings[0].trim()),//crn
                         strings[1].trim(),//subject
                         Integer.parseInt(strings[2].trim()),//course number
                         Integer.parseInt(strings[3].trim()),//section
@@ -195,53 +196,53 @@ public class DBAdapter {
     }
 
 
-    public long addWord (
-            int crn,
-            String subject,
-            int course_number,
-            int section,
-            int credit,
-            String title,
-            String instructor,
-            String description,
-            int start_time,
-            int end_time,
-            boolean sunday,
-            boolean monday,
-            boolean tuesday,
-            boolean wednesday,
-            boolean thursday,
-            boolean friday,
-            boolean saturday,
-            boolean scheduled,
-            boolean done) {
-
-        ContentValues initialValues = new ContentValues();
-
-        initialValues.put(COL_CRN, crn);
-        initialValues.put(COL_SUBJECT, subject);
-        initialValues.put(COL_COURSE_NUMBER, course_number);
-        initialValues.put(COL_SECTION, section);
-        initialValues.put(COL_CREDIT, credit);
-        initialValues.put(COL_TITLE, title);
-        initialValues.put(COL_INSTRUCTOR, instructor);
-        initialValues.put(COL_DESCRIPTION, description);
-        initialValues.put(COL_START_TIME, start_time);
-        initialValues.put(COL_END_TIME, end_time);
-        initialValues.put(COL_SUNDAY, sunday);
-        initialValues.put(COL_MONDAY, monday);
-        initialValues.put(COL_TUESDAY, tuesday);
-        initialValues.put(COL_WEDNESDAY, wednesday);
-        initialValues.put(COL_THURSDAY, thursday);
-        initialValues.put(COL_FRIDAY, friday);
-        initialValues.put(COL_SATURDAY, saturday);
-        initialValues.put(COL_SCHEDULED, scheduled);
-        initialValues.put(COL_DONE, done);
-
-//            Toast.makeText(mHelperContext, "Add Course ", Toast.LENGTH_SHORT).show();
-
-        return db.insert(TABLE_NAME, null, initialValues);
-    }
+//    public long addWord (
+//            int crn,
+//            String subject,
+//            int course_number,
+//            int section,
+//            int credit,
+//            String title,
+//            String instructor,
+//            String description,
+//            int start_time,
+//            int end_time,
+//            boolean sunday,
+//            boolean monday,
+//            boolean tuesday,
+//            boolean wednesday,
+//            boolean thursday,
+//            boolean friday,
+//            boolean saturday,
+//            boolean scheduled,
+//            boolean done) {
+//
+//        ContentValues initialValues = new ContentValues();
+//
+//        initialValues.put(COL_CRN, crn);
+//        initialValues.put(COL_SUBJECT, subject);
+//        initialValues.put(COL_COURSE_NUMBER, course_number);
+//        initialValues.put(COL_SECTION, section);
+//        initialValues.put(COL_CREDIT, credit);
+//        initialValues.put(COL_TITLE, title);
+//        initialValues.put(COL_INSTRUCTOR, instructor);
+//        initialValues.put(COL_DESCRIPTION, description);
+//        initialValues.put(COL_START_TIME, start_time);
+//        initialValues.put(COL_END_TIME, end_time);
+//        initialValues.put(COL_SUNDAY, sunday);
+//        initialValues.put(COL_MONDAY, monday);
+//        initialValues.put(COL_TUESDAY, tuesday);
+//        initialValues.put(COL_WEDNESDAY, wednesday);
+//        initialValues.put(COL_THURSDAY, thursday);
+//        initialValues.put(COL_FRIDAY, friday);
+//        initialValues.put(COL_SATURDAY, saturday);
+//        initialValues.put(COL_SCHEDULED, scheduled);
+//        initialValues.put(COL_DONE, done);
+//
+////            Toast.makeText(mHelperContext, "Add Course ", Toast.LENGTH_SHORT).show();
+//
+//        return db.insert(TABLE_NAME, null, initialValues);
+//    }
 
     //End Edited By Marcos
     //
@@ -394,7 +395,8 @@ public class DBAdapter {
                 String id = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_ID));
                 String title = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_TITLE));
                 String scheduled = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SCHEDULED));
-                list.add(id + " / " + title + " / schedule " + scheduled);
+                String subject = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SUBJECT));//Marcos
+                list.add(id + " / " + title + " / schedule " + scheduled + " / " + subject);//Marcos
                 cursor.moveToNext();
             }
         }

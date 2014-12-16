@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +22,9 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 
@@ -55,14 +60,15 @@ public class SearchActivity extends Activity {
         handleIntent(intent);
         //String value = intent.getStringExtra("key"); //if it's a string you stored.
 
-        Resources res = getResources();
-        menuTitles = res.getStringArray(R.array.titles);
-        menuDescriptions = res.getStringArray(R.array.descriptions);
-
-        list = (ListView) findViewById(R.id.listView);
-
-        VivzAdapter adapter = new VivzAdapter(this, menuTitles, images, menuDescriptions);
-        list.setAdapter(adapter);
+        final Resources res = getResources();
+//
+//        menuTitles = res.getStringArray(R.array.titles);
+//        menuDescriptions = res.getStringArray(R.array.descriptions);
+//
+//        list = (ListView) findViewById(R.id.listView);
+//
+//        VivzAdapter adapter = new VivzAdapter(this, menuTitles, images, menuDescriptions);
+//        list.setAdapter(adapter);
 
 
         Button btnF = (Button) findViewById(R.id.btnSearch);
@@ -76,9 +82,26 @@ public class SearchActivity extends Activity {
                 ArrayList<String> allMyCourses = myDataBase.getAllCourses();//edited MArcos
 
                 myDataBase.close();
+//                for (int i = 0; i < allMyCourses.size(); i++) {
+//                    Toast.makeText(getBaseContext(), "Course in the DB: " + allMyCourses.get(i), Toast.LENGTH_SHORT).show();
+//                }
+                menuTitles = new String[allMyCourses.size()];
+                menuDescriptions = new String[allMyCourses.size()];
+
                 for (int i = 0; i < allMyCourses.size(); i++) {
-                    Toast.makeText(getBaseContext(), "Course in the DB: " + allMyCourses.get(i), Toast.LENGTH_SHORT).show();
+                    String[] strings = TextUtils.split(allMyCourses.get(i), "/");
+                    menuTitles[i] = strings[3].trim();
+                    menuDescriptions[i] = strings[1].trim();
                 }
+
+
+//                menuTitles = res.getStringArray(R.array.titles);
+//                menuDescriptions = res.getStringArray(R.array.descriptions);
+
+                list = (ListView) findViewById(R.id.listView);
+
+                VivzAdapter adapter = new VivzAdapter(getBaseContext(), menuTitles, images, menuDescriptions);
+                list.setAdapter(adapter);
             }
         });
 
@@ -127,8 +150,13 @@ public class SearchActivity extends Activity {
             TextView myDescription = (TextView) row.findViewById(R.id.textView2);
 
             //change position if you want to change the image
-            myImage.setImageResource(images[position]);
+//            myImage.setImageResource(images[position]);
             myTitle.setText(titleArray[position]);
+            if (titleArray[position].equals("CSIT")){
+                myImage.setImageResource(images[2]);
+            } else{
+                myImage.setImageResource(images[4]);
+            }
             myTitle.setText(descriptionArray[position]);
 
             return row;
