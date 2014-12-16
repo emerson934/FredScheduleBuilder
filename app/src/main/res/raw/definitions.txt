@@ -1,0 +1,42 @@
+10250 - CSIT - 104 - 02 - 3 - Intro Microcomputer Software - Decker, Derrik W - 900 - 950 - MWF
+15351 - CSIT - 104 - 03 - 3 - Intro Microcomputer Software - Decker, Derrik W - 1100 - 1150 - MWF
+15352 - CSIT - 104 - 04 - 3 - Intro Microcomputer Software - Pingitore, Andrew F - 1600 - 1720 - TR
+10262 - CSIT - 105 - 01 - 3 - Visual BASIC I - Nazarenko, Natalie A - 1400 - 1450 - MWF
+14405 - CSIT - 105 - 02 - 3 - Visual BASIC I - Nazarenko, Natalie A - 1500 - 1550 - MWF
+10272 - CSIT - 107 - 01 - 3 - Web Programming I - Raghunath, Stephen Ashok - 1100 - 1220 - TR
+10274 - CSIT - 107 - 02 - 3 - Web Programming I - Raghunath, Stephen Ashok - 1400 - 1520 - TR
+12983 - CSIT - 120 - 01 - 3 - Computer Science Overview - Pelz, Adrienne Austin - 1230 - 1350 - TR
+13648 - CSIT - 120 - 02 - 3 - Computer Science Overview - Cole, Gregory B - 1700 - 1820 - TR
+14894 - CSIT - 120 - 03 - 3 - Computer Science Overview - Cole, Gregory B - 1630 - 1750 - MW
+17346 - CSIT - 120 - 04 - 3 - Computer Science Overview - Szocki, Michael E - 1500 - 1550 - MWF
+17597 - CSIT - 120 - 05 - 3 - Computer Science Overview - Szocki, Michael E - 1230 - 1350 - TR
+10284 - CSIT - 121 - 01 - 3 - Computer Science I - Barneva, Reneta Petrova - 1230 - 1350 - TR
+10285 - CSIT - 121 - 02 - 3 - Computer Science I - Tsetse, Anthony Kofi - 1300 - 1350 - MWF
+15752 - CSIT - 151 - 01 - 3 - Intro to Information Systems - Singh, Gurmukh - 1500 - 1620 - MW
+15753 - CSIT - 151 - 02 - 3 - Intro to Information Systems - Singh, Gurmukh - 1500 - 1620 - MW
+17595 - CSIT - 151 - 03 - 3 - Intro to Information Systems - Singh, Gurmukh - 1500 - 1620 - MW
+18099 - CSIT - 208 - 01 - 3 - Computer Game Design - Decker, Derrik W - 1200 - 1250 - MWF
+10303 - CSIT - 221 - 01 - 3 - Computer Science II - Arnavut, Ziya - 930 - 1050 - TR
+10304 - CSIT - 231 - 01 - 3 - Systems Programming - Szocki, Michael E - 1000 - 1050 - MWF
+12987 - CSIT - 241 - 01 - 3 - Discrete Math for Comp Sci I - Maloney, Daniel Scot - 1530 - 1650 - TR
+10305 - CSIT - 242 - 01 - 3 - Discrete Math for Comp Sci II - Maloney, Daniel Scot - 1400 - 1520 - TR
+15354 - CSIT - 251 - 01 - 3 - Information Systems Structures - Scialdone, Michael John - 930 - 1050 - TR
+15355 - CSIT - 251 - 02 - 3 - Information Systems Structures - Pelz, Adrienne Austin - 1530 - 1650 - TR
+15483 - CSIT - 251 - 03 - 3 - Information Systems Structures - Nazarenko, Natalie A - 1000 - 1050 - MWF
+17417 - CSIT - 251 - 04 - 3 - Information Systems Structures - Scialdone, Michael John - 1100 - 1220 - TR
+17426 - CSIT - 251 - 05 - 3 - Information Systems Structures - Pelz, Adrienne Austin - 1400 - 1520 - TR
+18792 - CSIT - 251 - 06 - 3 - Information Systems Structures - Nippard, Paul W - 1800 - 2030 - TR
+18911 - CSIT - 291 - 01 - 3 - SpTp: Node - Raghunath, Stephen Ashok - 1230 - 1350 - TR
+14896 - CSIT - 312 - 01 - 3 - Computer Structures - Arnavut, Ziya - 800 - 920 - TR
+10310 - CSIT - 321 - 01 - 3 - Paradigms of Programming Lang - Olson, Robert B W	- 1230 - 1350 - TR
+10311 - CSIT - 341 - 01 - 3 - Data Structures - Barneva, Reneta Petrova	- 930 - 1050 - TR
+17416 - CSIT - 351 - 01 - 3 - Business Systems Development - Nippard, Paul W - 1800 - 2030  - R
+18912 - CSIT - 411 - 01 - 3 - Prog for Embedded Microcontrol - Hansen, John A - 1700 - 1930  - W
+15356 - CSIT - 425 - 01 - 3 - Software Engineering - Scialdone, Michael John - 1700 - 1820  - TR
+19166 - CSIT - 425 - 02 - 3 - Software Engineering - Scialdone, Michael John - 1400 - 1520  - TR
+18914 - CSIT - 431 - 01 - 3 - Intro Operating Systems - Olson, Robert B W - 1700 - 1930  - M
+10314 - CSIT - 435 - 01 - 3 - Data Comm Networks II - Tsetse, Anthony Kofi - 1100 - 1150  - MWF
+17344 - CSIT - 455 - 01 - 3 - Relational Object Databases - Tsetse, Anthony Kofi - 800 - 850 - MWF
+18913 - CSIT - 456 - 01 - 3 - Info Decision Support Systems - Nazarenko, Natalie A - 1300 - 1350 - MWF
+19067 - CSIT - 496 - 02 - 3 - SpTp: Ethical Hacking - Olson, Robert B W	 - 1500 - 1550 - MWF
+19167 - CSIT - 496 - 03 - 3 - SpTp: Ethical Hacking - Olson, Robert B W - 1200 - 1250 - MWF
