@@ -2,11 +2,17 @@ package com.example.emersontenorio.fredschedulebuilder;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.TextUtils;
 import android.util.Log;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
@@ -63,7 +69,7 @@ public class DBAdapter {
     private static final String TAG = "DBAdapter";
     private final Context context;
     private DatabaseHelper dbHelper;
-    private SQLiteDatabase db;
+    private static SQLiteDatabase db;//edited by Marcos (static)
 
     public DBAdapter(Context context) {
         this.context = context;
@@ -71,9 +77,12 @@ public class DBAdapter {
     }
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
-
+        //edited by Marcos
+        private final Context mHelperContext;
+        //End Edited by Marcos
         public DatabaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
+            this.mHelperContext = context;//edited Marcos
         }
 
         @Override
@@ -87,6 +96,115 @@ public class DBAdapter {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
             onCreate(db);
         }
+        //
+        //
+        //
+        //Edited By Marcos
+        //Method to get input from a .txt file
+        private void loadDictionary() {
+            new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        loadWords();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }).start();
+        }
+
+        private void loadWords() throws IOException {
+            final Resources resources = mHelperContext.getResources();
+            InputStream inputStream = resources.openRawResource(R.raw.definitions);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            try {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] strings = TextUtils.split(line, "-");
+                    if (strings.length < 2) continue;
+                    long id = addWord(Integer.parseInt(strings[0].trim()),//crn
+                            strings[1].trim(),//subject
+                            Integer.parseInt(strings[1].trim()),//course number
+                            Integer.parseInt(strings[1].trim()),//section
+                            Integer.parseInt(strings[1].trim()),//credit
+                            strings[1].trim(),//title
+                            strings[1].trim(),//instructor
+                            strings[1].trim(),//description
+                            Integer.parseInt(strings[1].trim()),//start time
+                            Integer.parseInt(strings[1].trim()),//end time
+                            Boolean.parseBoolean(strings[1].trim()),//sunday
+                            Boolean.parseBoolean(strings[1].trim()),//monday
+                            Boolean.parseBoolean(strings[1].trim()),//tuesday
+                            Boolean.parseBoolean(strings[1].trim()),//wednesday
+                            Boolean.parseBoolean(strings[1].trim()),//thursday
+                            Boolean.parseBoolean(strings[1].trim()),//fridays
+                            Boolean.parseBoolean(strings[1].trim()),//saturday
+                            Boolean.parseBoolean(strings[1].trim()),//schedule
+                            Boolean.parseBoolean(strings[1].trim()));//done
+                    if (id < 0) {
+                        Log.e(TAG, "unable to add word: " + strings[0].trim());
+                    }
+                }
+            } finally {
+                reader.close();
+            }
+        }
+
+
+        public long addWord (
+                int crn,
+                String subject,
+                int course_number,
+                int section,
+                int credit,
+                String title,
+                String instructor,
+                String description,
+                int start_time,
+                int end_time,
+                boolean sunday,
+                boolean monday,
+                boolean tuesday,
+                boolean wednesday,
+                boolean thursday,
+                boolean friday,
+                boolean saturday,
+                boolean scheduled,
+                boolean done) {
+
+            ContentValues initialValues = new ContentValues();
+
+            initialValues.put(COL_CRN, crn);
+            initialValues.put(COL_SUBJECT, subject);
+            initialValues.put(COL_COURSE_NUMBER, course_number);
+            initialValues.put(COL_SECTION, section);
+            initialValues.put(COL_CREDIT, credit);
+            initialValues.put(COL_TITLE, title);
+            initialValues.put(COL_INSTRUCTOR, instructor);
+            initialValues.put(COL_DESCRIPTION, description);
+            initialValues.put(COL_START_TIME, start_time);
+            initialValues.put(COL_END_TIME, end_time);
+            initialValues.put(COL_SUNDAY, sunday);
+            initialValues.put(COL_MONDAY, monday);
+            initialValues.put(COL_TUESDAY, tuesday);
+            initialValues.put(COL_WEDNESDAY, wednesday);
+            initialValues.put(COL_THURSDAY, thursday);
+            initialValues.put(COL_FRIDAY, friday);
+            initialValues.put(COL_SATURDAY, saturday);
+            initialValues.put(COL_SCHEDULED, scheduled);
+            initialValues.put(COL_DONE, done);
+
+
+            return db.insert(TABLE_NAME, null, initialValues);
+        }
+
+        //End Edited By Marcos
+        //
+        //
+        //
+
+
     }
 
     //---opens the database---
