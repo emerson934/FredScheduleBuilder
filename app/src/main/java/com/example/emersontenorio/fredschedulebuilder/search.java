@@ -2,6 +2,8 @@ package com.example.emersontenorio.fredschedulebuilder;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -9,44 +11,50 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
  * Created by Marcos Souza on 12/15/2014.
  */
 public class search extends Activity {
-//    ListView list;
-//
-//    String[] menuTitles;
-//    String[] menuDescriptions;
-//    int[] images = {
-//            R.drawable.csit2,
-//            R.drawable.csit3,
-//            R.drawable.csit4,
-//            R.drawable.mobile1,
-//            R.drawable.mobile3,
-//            R.drawable.csit2,
-//            R.drawable.csit3,
-//            R.drawable.csit4,
-//            R.drawable.mobile1,
-//            R.drawable.mobile3,
-//            R.drawable.csit2
-//    };
+    ListView list;
+
+    String[] menuTitles;
+    String[] menuDescriptions;
+    int[] images = {
+            R.drawable.csit2,
+            R.drawable.csit3,
+            R.drawable.csit4,
+            R.drawable.mobile1,
+            R.drawable.mobile3,
+            R.drawable.csit2,
+            R.drawable.csit3,
+            R.drawable.csit4,
+            R.drawable.mobile1,
+            R.drawable.mobile3,
+            R.drawable.csit2
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_main);
+        setContentView(R.layout.search_view);
 
-//        Resources res = getResources();
-//        menuTitles = res.getStringArray(R.array.titles);
-//        menuDescriptions = res.getStringArray(R.array.descriptions);
-//
-//        list = (ListView) findViewById(R.id.listView);
-//
-//        VivzAdapter adapter = new VivzAdapter(this, menuTitles, images, menuDescriptions);
-//        list.setAdapter(adapter);
+        Intent intent = getIntent();
+        //String value = intent.getStringExtra("key"); //if it's a string you stored.
+
+        Resources res = getResources();
+        menuTitles = res.getStringArray(R.array.titles);
+        menuDescriptions = res.getStringArray(R.array.descriptions);
+
+        list = (ListView) findViewById(R.id.listView);
+
+        VivzAdapter adapter = new VivzAdapter(this, menuTitles, images, menuDescriptions);
+        list.setAdapter(adapter);
 
     }
 

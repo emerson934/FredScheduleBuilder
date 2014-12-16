@@ -2,6 +2,7 @@ package com.example.emersontenorio.fredschedulebuilder;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -166,18 +167,23 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         Button btnSearch = (Button) findViewById(R.id.btnSearch);
         btnSearch.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                setContentView(R.layout.search_view);
+//                setContentView(R.layout.search_view);
                 //Creating ListView
 //                String[] listItems = new String[]{"Item 1","Item 2","Item 3","Item 4"};
 //                ArrayAdapter<String> adapter = ArrayAdapter.createFromResource(myContext, listItems.length, R.layout.);
-                Resources res = getResources();
-                menuTitles = res.getStringArray(R.array.titles);
-                menuDescriptions = res.getStringArray(R.array.descriptions);
 
-                list = (ListView) findViewById(R.id.listView);
+                Intent intent = new Intent(MainActivity.this, search.class);
+                //intent.putExtra("key", value); //Optional parameters
+                MainActivity.this.startActivity(intent);
 
-                search.VivzAdapter adapter = new search.VivzAdapter(myContext, menuTitles, images, menuDescriptions);
-                list.setAdapter(adapter);
+//                Resources res = getResources();
+//                menuTitles = res.getStringArray(R.array.titles);
+//                menuDescriptions = res.getStringArray(R.array.descriptions);
+//
+//                list = (ListView) findViewById(R.id.listView);
+//
+//                search.VivzAdapter adapter = new search.VivzAdapter(myContext, menuTitles, images, menuDescriptions);
+//                list.setAdapter(adapter);
             }
         });
 
