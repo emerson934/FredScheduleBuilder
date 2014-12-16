@@ -1,6 +1,8 @@
 package com.example.emersontenorio.fredschedulebuilder;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -9,7 +11,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.InputStream;
@@ -28,6 +30,23 @@ import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
+    ListView list;
+
+    String[] menuTitles;
+    String[] menuDescriptions;
+    int[] images = {
+            R.drawable.csit2,
+            R.drawable.csit3,
+            R.drawable.csit4,
+            R.drawable.mobile1,
+            R.drawable.mobile3,
+            R.drawable.csit2,
+            R.drawable.csit3,
+            R.drawable.csit4,
+            R.drawable.mobile1,
+            R.drawable.mobile3,
+            R.drawable.csit2
+    };
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -79,12 +98,12 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         //Start test
-        String[] daysA = new String[]{"M", "W", "F"};
-        String[] daysB = new String[]{"M", "W", "F"};
-        String[] daysC = new String[]{"M", "W", "F"};
-        String[] daysD = new String[]{"T", "TH"};
-        String[] daysE = new String[]{"T", "TH"};
-        String[] daysF = new String[]{"T", "TH"};
+//        String[] daysA = new String[]{"M", "W", "F"};
+//        String[] daysB = new String[]{"M", "W", "F"};
+//        String[] daysC = new String[]{"M", "W", "F"};
+//        String[] daysD = new String[]{"T", "TH"};
+//        String[] daysE = new String[]{"T", "TH"};
+//        String[] daysF = new String[]{"T", "TH"};
 
         final String[] allDays = new String[]{"M", "W", "F", "T", "TH"};
 
@@ -142,11 +161,23 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 //                Toast.makeText(getBaseContext(), resultF, Toast.LENGTH_SHORT).show();
 //            }
 //        });
+        final Context myContext = getBaseContext();
 
         Button btnSearch = (Button) findViewById(R.id.btnSearch);
         btnSearch.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                setContentView(R.layout.search);
+                setContentView(R.layout.search_view);
+                //Creating ListView
+//                String[] listItems = new String[]{"Item 1","Item 2","Item 3","Item 4"};
+//                ArrayAdapter<String> adapter = ArrayAdapter.createFromResource(myContext, listItems.length, R.layout.);
+                Resources res = getResources();
+                menuTitles = res.getStringArray(R.array.titles);
+                menuDescriptions = res.getStringArray(R.array.descriptions);
+
+                list = (ListView) findViewById(R.id.listView);
+
+                search.VivzAdapter adapter = new search.VivzAdapter(myContext, menuTitles, images, menuDescriptions);
+                list.setAdapter(adapter);
             }
         });
 
