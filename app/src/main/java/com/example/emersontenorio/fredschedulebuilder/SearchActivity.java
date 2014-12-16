@@ -5,6 +5,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,7 +26,7 @@ import android.widget.Toast;
  */
 public class SearchActivity extends Activity {
     ListView list;
-
+    DBAdapter db = new DBAdapter(this);
     String[] menuTitles;
     String[] menuDescriptions;
     int[] images = {
@@ -69,9 +70,12 @@ public class SearchActivity extends Activity {
     }
 
     private void handleIntent(Intent intent) {
+        //use the query to search your data
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            //use the query to search your data somehow
+            Cursor c = db.getWordMatches(query, null);
+            //process Cursor and display results
+
         }
     }
 

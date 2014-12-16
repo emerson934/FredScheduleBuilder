@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -75,6 +76,8 @@ public class DBAdapter {
         this.context = context;
         this.dbHelper = new DatabaseHelper(context);
     }
+
+
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
         //edited by Marcos
@@ -339,6 +342,31 @@ public class DBAdapter {
         ContentValues args = new ContentValues();
         args.put(COL_SCHEDULED, scheduled);
         return db.update(TABLE_NAME, args, COL_ID + " = " + id, null) > 0;
+    }
+
+    // --- Build a SQL Statements the searches for a query ---
+
+    public Cursor getWordMatches(String query, String[] columns) {
+        String selection = COL_TITLE + " MATCH ?";
+        String[] selectionArgs = new String[] {query+"*"};
+
+        return query(selection, selectionArgs, columns);
+    }
+
+    private Cursor query(String selection, String[] selectionArgs, String[] columns) {
+        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+        builder.setTables(TABLE_NAME);
+
+        Cursor cursor = builder.query(dbHelper.getReadableDatabase(),
+                columns, selection, selectionArgs, null, null, null);
+
+        if (cursor == null) {
+            return null;
+        } else if (!cursor.moveToFirst()) {
+            cursor.close();
+            return null;
+        }
+        return cursor;
     }
 
 //    public ArrayList<String> getAllCourses() {
