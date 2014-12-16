@@ -3,7 +3,6 @@ package com.example.emersontenorio.fredschedulebuilder;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -172,7 +171,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 //                String[] listItems = new String[]{"Item 1","Item 2","Item 3","Item 4"};
 //                ArrayAdapter<String> adapter = ArrayAdapter.createFromResource(myContext, listItems.length, R.layout.);
 
-                Intent intent = new Intent(MainActivity.this, search.class);
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
                 //intent.putExtra("key", value); //Optional parameters
                 MainActivity.this.startActivity(intent);
 
