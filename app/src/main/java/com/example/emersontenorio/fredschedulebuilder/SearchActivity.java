@@ -23,7 +23,7 @@ import android.widget.Toast;
 /**
  * Created by Marcos Souza on 12/15/2014.
  */
-public class search extends Activity {
+public class SearchActivity extends Activity {
     ListView list;
 
     String[] menuTitles;

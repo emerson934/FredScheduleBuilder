@@ -125,21 +125,23 @@ public class DBAdapter {
                     if (strings.length < 2) continue;
                     long id = addWord(Integer.parseInt(strings[0].trim()),//crn
                             strings[1].trim(),//subject
-                            Integer.parseInt(strings[1].trim()),//course number
-                            Integer.parseInt(strings[1].trim()),//section
-                            Integer.parseInt(strings[1].trim()),//credit
-                            strings[1].trim(),//title
-                            strings[1].trim(),//instructor
-                            strings[1].trim(),//description
-                            Integer.parseInt(strings[1].trim()),//start time
-                            Integer.parseInt(strings[1].trim()),//end time
-                            Boolean.parseBoolean(strings[1].trim()),//sunday
-                            Boolean.parseBoolean(strings[1].trim()),//monday
-                            Boolean.parseBoolean(strings[1].trim()),//tuesday
-                            Boolean.parseBoolean(strings[1].trim()),//wednesday
-                            Boolean.parseBoolean(strings[1].trim()),//thursday
-                            Boolean.parseBoolean(strings[1].trim()),//fridays
-                            Boolean.parseBoolean(strings[1].trim()),//saturday
+                            Integer.parseInt(strings[2].trim()),//course number
+                            Integer.parseInt(strings[3].trim()),//section
+                            Integer.parseInt(strings[4].trim()),//credit
+                            strings[5].trim(),//title
+                            strings[6].trim(),//instructor
+                            strings[7].trim(),//description
+                            Integer.parseInt(strings[8].trim()),//start time
+                            Integer.parseInt(strings[9].trim()),//end time
+
+                            Boolean.parseBoolean(strings[10].trim()),//sunday
+                            Boolean.parseBoolean(strings[10].trim()),//monday
+                            Boolean.parseBoolean(strings[10].trim()),//tuesday
+                            Boolean.parseBoolean(strings[10].trim()),//wednesday
+                            Boolean.parseBoolean(strings[10].trim()),//thursday
+                            Boolean.parseBoolean(strings[10].trim()),//fridays
+                            Boolean.parseBoolean(strings[10].trim()),//saturday
+
                             Boolean.parseBoolean(strings[1].trim()),//schedule
                             Boolean.parseBoolean(strings[1].trim()));//done
                     if (id < 0) {
