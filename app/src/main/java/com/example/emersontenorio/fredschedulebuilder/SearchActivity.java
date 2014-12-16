@@ -118,7 +118,7 @@ public class SearchActivity extends Activity {
         //use the query to search your data
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            Cursor c = db.getWordMatches(query, null);
+//            Cursor c = db.getWordMatches(query, null);
             //process Cursor and display results
 
         }
@@ -141,7 +141,7 @@ public class SearchActivity extends Activity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent){
-//
+
             View row = convertView;
             if(row==null){
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

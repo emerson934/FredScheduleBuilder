@@ -390,18 +390,19 @@ public class DBAdapter {
 
         Cursor cursor = this.getAllRecords();
 
-        if (cursor != null && cursor.moveToFirst()) {
-            while (!cursor.isAfterLast()) {
-                String id = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_ID));
-                String title = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_TITLE));
-                String scheduled = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SCHEDULED));
-                String subject = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SUBJECT));//Marcos
-                list.add(id + " / " + title + " / schedule " + scheduled + " / " + subject);//Marcos
-                cursor.moveToNext();
+        if(cursor != null) {
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    String id = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_ID));
+                    String title = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_TITLE));
+                    String scheduled = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SCHEDULED));
+                    String subject = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SUBJECT));//Marcos
+                    list.add(id + " / " + title + " / schedule " + scheduled + " / " + subject);//Marcos
+                    cursor.moveToNext();
+                }
             }
+            cursor.close();
         }
-
-        if(cursor != null) cursor.close();
         this.close();
 
         return list;
