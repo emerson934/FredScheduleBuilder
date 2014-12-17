@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 public class SearchActivity extends Activity {
     ListView list;
     DBAdapter db = new DBAdapter(this);
+    int[] courseListIds;
     String[] menuTitles;
     String[] menuDescriptions;
     int[] images = {
@@ -70,16 +72,18 @@ public class SearchActivity extends Activity {
 
                 menuTitles = new String[allMyCourses.size()];
                 menuDescriptions = new String[allMyCourses.size()];
+                courseListIds = new int[allMyCourses.size()];
 
                 for (int i = 0; i < allMyCourses.size(); i++) {
                     String[] strings = TextUtils.split(allMyCourses.get(i), "/");
                     menuTitles[i] = strings[3].trim();
                     menuDescriptions[i] = strings[1].trim();
+                    courseListIds[i] = Integer.parseInt(strings[0].trim());
                 }
 
                 list = (ListView) findViewById(R.id.listView);
 
-                VivzAdapter adapter = new VivzAdapter(getBaseContext(), menuTitles, images, menuDescriptions);
+                VivzAdapter adapter = new VivzAdapter(getBaseContext(), menuTitles, images, menuDescriptions, /*new*/ courseListIds);
                 list.setAdapter(adapter);
             }
         });
@@ -106,17 +110,19 @@ public class SearchActivity extends Activity {
         int[] images;
         String[] titleArray;
         String[] descriptionArray;
-        VivzAdapter(Context c, String[] titles, int imgs[], String[] desc)
+        int[] courseListArray;
+        VivzAdapter(Context c, String[] titles, int imgs[], String[] desc, int[] courseIds)
         {
             super(c, R.layout.course_list_item, R.id.textView, titles);
             this.context = c;
             this.images = imgs;
             this.titleArray = titles;
             this.descriptionArray = desc;
+            this.courseListArray = courseIds;
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent){
+        public View getView(final int position, View convertView, ViewGroup parent){
 
             View row = convertView;
             if(row==null){
@@ -137,6 +143,12 @@ public class SearchActivity extends Activity {
                 myImage.setImageResource(images[4]);
             }
             myTitle.setText(descriptionArray[position]);
+
+            row.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View v){
+                    Toast.makeText(context, "Item " + courseListArray[position] + " Clicked! In position: " + position, Toast.LENGTH_SHORT).show();
+                }
+            });
 
             return row;
         }
