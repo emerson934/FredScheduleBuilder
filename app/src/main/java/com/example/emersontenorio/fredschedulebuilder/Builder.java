@@ -28,6 +28,19 @@ public class Builder {
         nCourses++;
     }
 
+    public static boolean courseSet(int courseNumber){
+        boolean result = false;
+
+        for (int i = 0; i < courses.size(); i++) {
+            if (courses.get(i).course_number == courseNumber){
+                result = true;
+                break;
+            }
+        }
+
+        return result;
+    }
+
     public static String addClass(Course course){
         boolean conflict = false;
         int[] conflictWith = new int[courses.size()];
@@ -35,7 +48,11 @@ public class Builder {
         int pos =0;
         if ((course.done)||(course.scheduled)) {
             //skipping course (marked as done) or (already in schedule)
-            System.out.println("Done or Already In!");
+//            System.out.println("Done or Already In!");
+            conflict = true;
+        } else if (courseSet(course.course_number)){
+            //course with the same number already in the schedule
+            //can have different times
             conflict = true;
         } else if (nCourses > 0 ) {
             for (int i = 0; i < nCourses; i++) {
@@ -44,7 +61,7 @@ public class Builder {
                     conflict = true;
                     conflictWith[pos] = i;
                     pos++;
-                    System.out.println("Conflict in: "+ i);
+//                    System.out.println("Conflict in: "+ i);
 //                    break;
                 }
             }
@@ -179,7 +196,7 @@ public class Builder {
 
                     int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_ID)));
                     int crn = 12;//Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_CRN)));
-                    int course_number = 10;// Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_COURSE_NUMBER)));
+                    int course_number = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_COURSE_NUMBER)));
                     int section = 1;// Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SECTION)));
                     int credit = 3;//Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_CREDIT)));
                     String instructor = "test";//cursor.getString(cursor.getColumnIndex(DBAdapter.COL_INSTRUCTOR));

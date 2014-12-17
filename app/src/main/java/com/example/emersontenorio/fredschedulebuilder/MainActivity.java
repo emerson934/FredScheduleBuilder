@@ -57,6 +57,15 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
             }
         });
 
+        Button btnSchedule = (Button) findViewById(R.id.btnSchedule);
+        btnSchedule.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent(MainActivity.this, ScheduleActivity.class);
+                //intent.putExtra("key", value); //Optional parameters
+                MainActivity.this.startActivity(intent);
+            }
+        });
+
         Button btnRandom = (Button) findViewById(R.id.btnRandom);
         btnRandom.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -64,13 +73,13 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
                 builder.generateRandomSchedules(100, 2300, allDays, "CSIT");
                 ArrayList<Course> classes = builder.getCourses();
                 int scheduleSize = builder.getNumberCourses();
-                for (int i = 0; i < scheduleSize; i++) {
-                    if (classes.get(i).name != null){
-                        Toast.makeText(getBaseContext(), classes.get(i).name + " in: " + i, Toast.LENGTH_SHORT).show();
-                    } else{
-                        Toast.makeText(getBaseContext(), "Name null in: " + i, Toast.LENGTH_SHORT).show();
-                    }
-                }
+//                for (int i = 0; i < scheduleSize; i++) {
+//                    if (classes.get(i).name != null){
+//                        Toast.makeText(getBaseContext(), "Class: " + classes.get(i).subject +  " " + classes.get(i).course_number + "/  "  + classes.get(i).name + " in: " + i, Toast.LENGTH_SHORT).show();
+//                    } else{
+//                        Toast.makeText(getBaseContext(), "Name null in: " + i, Toast.LENGTH_SHORT).show();
+//                    }
+//                }
             }
         });
     }

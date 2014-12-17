@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * Created by Emerson Tenorio on 12/14/2014.
  */
 public class DBAdapter {
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 10;
     public static final String DATABASE_NAME = "scheduledb.sqlite";
     public static final String TABLE_NAME = "course";
 
@@ -352,6 +352,41 @@ public class DBAdapter {
                     String scheduled = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SCHEDULED));
                     String subject = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SUBJECT));//Marcos
                     list.add(id + " / " + title + " / schedule " + scheduled + " / " + subject);//Marcos
+                    cursor.moveToNext();
+                }
+            }
+            cursor.close();
+        }
+        this.close();
+
+        return list;
+    }
+
+    public ArrayList<String> getCoursesScheduled() {//static added marcos
+        ArrayList<String> list = new ArrayList<String>();
+
+        this.open();
+
+        Cursor cursor = this.getAllRecords();
+
+        if(cursor != null) {
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    int scheduled = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SCHEDULED)));
+                    if(scheduled == 1){
+                        String subject = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SUBJECT));//Marcos
+                        int course_number = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_COURSE_NUMBER)));
+                        int startTime = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_START_TIME)));
+                        int endTime = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_END_TIME)));
+                        int monday =    Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SUNDAY)));
+                        int tuesday =   Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_MONDAY)));
+                        int wednesday = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_TUESDAY)));
+                        int thursday =  Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_WEDNESDAY)));
+                        int friday =    Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_THURSDAY)));
+                        int saturday =  Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_FRIDAY)));
+                        int sunday =    Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SATURDAY)));
+                        list.add(subject + " / " + course_number + " /  " + startTime + " / " + endTime + " / " + monday + " / " + tuesday +  " / " + wednesday + " / " + thursday +  " / " + friday + " / " + saturday + " / " + sunday );
+                    }
                     cursor.moveToNext();
                 }
             }

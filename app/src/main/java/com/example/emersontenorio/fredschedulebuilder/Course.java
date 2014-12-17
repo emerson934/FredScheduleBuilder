@@ -22,6 +22,8 @@ public class Course {
     boolean scheduled;
     boolean done;
 
+
+
     public Course(int start, int end, String[] day, String subj, String nam,
     /*new fields*/int id, int crn, int course_number, int section, int credit, String instructor, String description, boolean scheduled, boolean done){
         startTime = start;
