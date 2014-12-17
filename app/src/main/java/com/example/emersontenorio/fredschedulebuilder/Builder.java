@@ -33,7 +33,11 @@ public class Builder {
         int[] conflictWith = new int[courses.size()];
 
         int pos =0;
-        if (nCourses > 0 ) {
+        if ((course.done)||(course.scheduled)) {
+            //skipping course (marked as done) or (already in schedule)
+            System.out.println("Done or Already In!");
+            conflict = true;
+        } else if (nCourses > 0 ) {
             for (int i = 0; i < nCourses; i++) {
 //                System.out.println("Position: "+ i);
                 if ((timeConflict(courses.get(i).startTime, courses.get(i).endTime, courses.get(i).days, course.startTime, course.endTime, course.days))) {
