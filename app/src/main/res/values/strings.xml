@@ -38,4 +38,7 @@
     <string name="title_activity_schedule">ScheduleActivity</string>
     <string name="hello_world">Hello world!</string>
 
+    <color name="gray">#DDDDDD</color>
+    <color name="white">#FFFFFF</color>
+
 </resources>
