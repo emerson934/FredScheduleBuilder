@@ -41,6 +41,7 @@ public class Builder {
                     conflictWith[pos] = i;
                     pos++;
                     System.out.println("Conflict in: "+ i);
+//                    break;
                 }
             }
         }
@@ -174,9 +175,9 @@ public class Builder {
 
                     int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_ID)));
                     int crn = 12;//Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_CRN)));
-                    int course_number = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_COURSE_NUMBER)));
-                    int section = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SECTION)));
-                    int credit = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_CREDIT)));
+                    int course_number = 10;// Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_COURSE_NUMBER)));
+                    int section = 1;// Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SECTION)));
+                    int credit = 3;//Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_CREDIT)));
                     String instructor = "test";//cursor.getString(cursor.getColumnIndex(DBAdapter.COL_INSTRUCTOR));
                     String description = "test";// cursor.getString(cursor.getColumnIndex(DBAdapter.COL_DESCRIPTION));
 
