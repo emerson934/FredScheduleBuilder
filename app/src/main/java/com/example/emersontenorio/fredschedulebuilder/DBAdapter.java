@@ -159,6 +159,11 @@ public class DBAdapter {
                     }
                 }
 
+                int startTime = Integer.parseInt(strings[/*8*/7].trim());
+                int endTime = Integer.parseInt(strings[/*9*/8].trim());
+
+
+
                 long id = insertRecord(Integer.parseInt(strings[0].trim()),//crn
                         strings[1].trim(),//subject
                         Integer.parseInt(strings[2].trim()),//course number
@@ -167,8 +172,8 @@ public class DBAdapter {
                         strings[5].trim(),//title
                         strings[6].trim(),//instructor
                         "Latim",//strings[7].trim(),//description
-                        Integer.parseInt(strings[/*8*/7].trim()),//start time
-                        Integer.parseInt(strings[/*9*/8].trim()),//end time
+                        convertHourMinuteToMinute(startTime),//start time
+                        convertHourMinuteToMinute(endTime),//end time
 
                         monday,//sunday
                         tuesday,//monday
@@ -188,6 +193,14 @@ public class DBAdapter {
             reader.close();
         }
     }
+
+    public int convertHourMinuteToMinute(int time){
+        int hour = time/100;
+        int minute = time % 100;
+
+        return hour*60 + minute;
+    }
+
     //End Edited By Marcos
 
     //---opens the database---

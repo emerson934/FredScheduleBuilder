@@ -35,7 +35,7 @@ public class Builder {
         int pos =0;
         if (nCourses > 0 ) {
             for (int i = 0; i < nCourses; i++) {
-                System.out.println("Position: "+ i);
+//                System.out.println("Position: "+ i);
                 if ((timeConflict(courses.get(i).startTime, courses.get(i).endTime, courses.get(i).days, course.startTime, course.endTime, course.days))) {
                     conflict = true;
                     conflictWith[pos] = i;
@@ -165,20 +165,20 @@ public class Builder {
                     day = TextUtils.split(week, " ");
 
                     //debugging
-                    for (int i = 0; i < day.length; i++) {
-                        System.out.println("day["+ i +"] =  " + day[i]);
-                    }
+//                    for (int i = 0; i < day.length; i++) {
+//                        System.out.println("day["+ i +"] =  " + day[i]);
+//                    }
 
                     String subj = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SUBJECT));
                     String title = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_TITLE));
 
                     int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_ID)));
-                    int crn = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_CRN)));
+                    int crn = 12;//Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_CRN)));
                     int course_number = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_COURSE_NUMBER)));
                     int section = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SECTION)));
                     int credit = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_CREDIT)));
-                    String instructor = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_INSTRUCTOR));
-                    String description = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_DESCRIPTION));
+                    String instructor = "test";//cursor.getString(cursor.getColumnIndex(DBAdapter.COL_INSTRUCTOR));
+                    String description = "test";// cursor.getString(cursor.getColumnIndex(DBAdapter.COL_DESCRIPTION));
 
                     boolean scheduled = false;
                     if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SCHEDULED))) == 1){
