@@ -92,7 +92,7 @@ public class DBAdapter {
             db.execSQL(CREATE_TABLE);
 
 //            open();
-//            loadDictionary();//edited Marcos
+//            loadFileIntoBD();//edited Marcos
 //            close();
         }
 
@@ -102,22 +102,16 @@ public class DBAdapter {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
             onCreate(db);
         }
-
-
-
     }
 
-    //
-    //
-    //
     //Edited By Marcos
     //Method to get input from a .txt file
-    public void loadDictionary() {
+    public void loadFileIntoBD() {
 //        new Thread(new Runnable() {
 //            public void run() {
                 try {
 //                        open();
-                    loadWords();
+                    loadCourses();
                     Toast.makeText(context, "Database Updated", Toast.LENGTH_SHORT).show();
 //                        close();
                 } catch (IOException e) {
@@ -127,7 +121,7 @@ public class DBAdapter {
 //        }).start();
     }
 
-    private void loadWords() throws IOException {
+    private void loadCourses() throws IOException {
         final Resources resources = /*mHelperContext*/context.getResources();
         InputStream inputStream = resources.openRawResource(R.raw.definitions);
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -194,60 +188,7 @@ public class DBAdapter {
             reader.close();
         }
     }
-
-
-//    public long addWord (
-//            int crn,
-//            String subject,
-//            int course_number,
-//            int section,
-//            int credit,
-//            String title,
-//            String instructor,
-//            String description,
-//            int start_time,
-//            int end_time,
-//            boolean sunday,
-//            boolean monday,
-//            boolean tuesday,
-//            boolean wednesday,
-//            boolean thursday,
-//            boolean friday,
-//            boolean saturday,
-//            boolean scheduled,
-//            boolean done) {
-//
-//        ContentValues initialValues = new ContentValues();
-//
-//        initialValues.put(COL_CRN, crn);
-//        initialValues.put(COL_SUBJECT, subject);
-//        initialValues.put(COL_COURSE_NUMBER, course_number);
-//        initialValues.put(COL_SECTION, section);
-//        initialValues.put(COL_CREDIT, credit);
-//        initialValues.put(COL_TITLE, title);
-//        initialValues.put(COL_INSTRUCTOR, instructor);
-//        initialValues.put(COL_DESCRIPTION, description);
-//        initialValues.put(COL_START_TIME, start_time);
-//        initialValues.put(COL_END_TIME, end_time);
-//        initialValues.put(COL_SUNDAY, sunday);
-//        initialValues.put(COL_MONDAY, monday);
-//        initialValues.put(COL_TUESDAY, tuesday);
-//        initialValues.put(COL_WEDNESDAY, wednesday);
-//        initialValues.put(COL_THURSDAY, thursday);
-//        initialValues.put(COL_FRIDAY, friday);
-//        initialValues.put(COL_SATURDAY, saturday);
-//        initialValues.put(COL_SCHEDULED, scheduled);
-//        initialValues.put(COL_DONE, done);
-//
-////            Toast.makeText(mHelperContext, "Add Course ", Toast.LENGTH_SHORT).show();
-//
-//        return db.insert(TABLE_NAME, null, initialValues);
-//    }
-
     //End Edited By Marcos
-    //
-    //
-    //
 
     //---opens the database---
     public DBAdapter open() {

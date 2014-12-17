@@ -5,10 +5,8 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,11 +19,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 
@@ -54,23 +48,13 @@ public class SearchActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-        setContentView(R.layout.search_view);
+        setContentView(R.layout.activity_search);
 
         Intent intent = getIntent();
         handleIntent(intent);
         //String value = intent.getStringExtra("key"); //if it's a string you stored.
 
         final Resources res = getResources();
-//
-//        menuTitles = res.getStringArray(R.array.titles);
-//        menuDescriptions = res.getStringArray(R.array.descriptions);
-//
-//        list = (ListView) findViewById(R.id.listView);
-//
-//        VivzAdapter adapter = new VivzAdapter(this, menuTitles, images, menuDescriptions);
-//        list.setAdapter(adapter);
-
 
         Button btnF = (Button) findViewById(R.id.btnSearch);
         btnF.setOnClickListener(new View.OnClickListener(){
@@ -78,14 +62,12 @@ public class SearchActivity extends Activity {
                 DBAdapter myDataBase = new DBAdapter(getBaseContext());
 
                 myDataBase.open();
-                myDataBase.loadDictionary();
+                myDataBase.loadFileIntoBD();
 
                 ArrayList<String> allMyCourses = myDataBase.getAllCourses();//edited MArcos
 
                 myDataBase.close();
-//                for (int i = 0; i < allMyCourses.size(); i++) {
-//                    Toast.makeText(getBaseContext(), "Course in the DB: " + allMyCourses.get(i), Toast.LENGTH_SHORT).show();
-//                }
+
                 menuTitles = new String[allMyCourses.size()];
                 menuDescriptions = new String[allMyCourses.size()];
 
@@ -95,18 +77,12 @@ public class SearchActivity extends Activity {
                     menuDescriptions[i] = strings[1].trim();
                 }
 
-
-//                menuTitles = res.getStringArray(R.array.titles);
-//                menuDescriptions = res.getStringArray(R.array.descriptions);
-
                 list = (ListView) findViewById(R.id.listView);
 
                 VivzAdapter adapter = new VivzAdapter(getBaseContext(), menuTitles, images, menuDescriptions);
                 list.setAdapter(adapter);
             }
         });
-
-
     }
 
     @Override
@@ -132,7 +108,7 @@ public class SearchActivity extends Activity {
         String[] descriptionArray;
         VivzAdapter(Context c, String[] titles, int imgs[], String[] desc)
         {
-            super(c, R.layout.single_row, R.id.textView, titles);
+            super(c, R.layout.course_list_item, R.id.textView, titles);
             this.context = c;
             this.images = imgs;
             this.titleArray = titles;
@@ -145,9 +121,8 @@ public class SearchActivity extends Activity {
             View row = convertView;
             if(row==null){
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                row = inflater.inflate(R.layout.single_row, parent, false);
+                row = inflater.inflate(R.layout.course_list_item, parent, false);
             }
-
 
             ImageView myImage = (ImageView) row.findViewById(R.id.imageView);
             TextView myTitle = (TextView) row.findViewById(R.id.textView);
@@ -164,7 +139,6 @@ public class SearchActivity extends Activity {
             myTitle.setText(descriptionArray[position]);
 
             return row;
-//            return super.getView(position, convertView, parent);
         }
     }
 
