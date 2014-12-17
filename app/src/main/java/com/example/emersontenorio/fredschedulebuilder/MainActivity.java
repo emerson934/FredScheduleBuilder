@@ -3,50 +3,23 @@ package com.example.emersontenorio.fredschedulebuilder;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
-
 public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
-
-    ListView list;
-
-    String[] menuTitles;
-    String[] menuDescriptions;
-    int[] images = {
-            R.drawable.csit2,
-            R.drawable.csit3,
-            R.drawable.csit4,
-            R.drawable.mobile1,
-            R.drawable.mobile3,
-            R.drawable.csit2,
-            R.drawable.csit3,
-            R.drawable.csit4,
-            R.drawable.mobile1,
-            R.drawable.mobile3,
-            R.drawable.csit2
-    };
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -62,32 +35,6 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Image Downloading and Fetching
-//        new Thread() {
-//            public void run() {
-//                try {
-//                    URL url = new URL("http://wanderingoak.net/bridge.png");
-//                    HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-//
-//                    if (httpCon.getResponseCode() != 200) {
-//                        throw new Exception("Failed to Connect");
-//                    }
-//
-//                    InputStream is = httpCon.getInputStream();
-//                    final Bitmap bitmap = BitmapFactory.decodeStream(is);
-//                    MainActivity.this.runOnUiThread(new Runnable() {
-//                        public void run() {
-//                            ImageView iv = (ImageView) findViewById(R.id.main_image);
-//                            iv.setImageBitmap(bitmap);
-//                        }
-//                    });
-//                } catch (Exception e) {
-//                    Log.e("Image", " Failed to load image", e);
-//                }
-//            }
-//        }.start();
-        //Ending Downloading and Fetching Image
-
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -97,92 +44,16 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        //Start test
-//        String[] daysA = new String[]{"M", "W", "F"};
-//        String[] daysB = new String[]{"M", "W", "F"};
-//        String[] daysC = new String[]{"M", "W", "F"};
-//        String[] daysD = new String[]{"T", "TH"};
-//        String[] daysE = new String[]{"T", "TH"};
-//        String[] daysF = new String[]{"T", "TH"};
-
         final String[] allDays = new String[]{"M", "W", "F", "T", "TH"};
 
-//        final Course courseA = new Course(830, 1030, daysA);
-//        final Course courseB = new Course(1040, 1150, daysB);
-//        final Course courseC = new Course(1140, 1230, daysC);
-//        final Course courseD = new Course(830, 1030, daysD);
-//        final Course courseE = new Course(1040, 1150, daysE);
-//        final Course courseF = new Course(1140, 1230, daysF);
-//
-//        Button btnA = (Button) findViewById(R.id.btnA);
-//        btnA.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//                String resultA = Builder.addClass(courseA);
-//                Toast.makeText(getBaseContext(), resultA, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        Button btnB = (Button) findViewById(R.id.btnB);
-//        btnB.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//                String resultB = Builder.addClass(courseB);
-//                Toast.makeText(getBaseContext(), resultB, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        Button btnC = (Button) findViewById(R.id.btnC);
-//        btnC.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//                String resultC = Builder.addClass(courseC);
-//                Toast.makeText(getBaseContext(), resultC, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        Button btnD = (Button) findViewById(R.id.btnD);
-//        btnD.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//                String resultD = Builder.addClass(courseD);
-//                Toast.makeText(getBaseContext(), resultD, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        Button btnE = (Button) findViewById(R.id.btnE);
-//        btnE.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//                String resultE = Builder.addClass(courseE);
-//                Toast.makeText(getBaseContext(), resultE, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        Button btnF = (Button) findViewById(R.id.btnF);
-//        btnF.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//                String resultF = Builder.addClass(courseF);
-//                Toast.makeText(getBaseContext(), resultF, Toast.LENGTH_SHORT).show();
-//            }
-//        });
         final Context myContext = getBaseContext();
 
         Button btnSearch = (Button) findViewById(R.id.btnSearch);
         btnSearch.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-//                setContentView(R.layout.search_view);
-                //Creating ListView
-//                String[] listItems = new String[]{"Item 1","Item 2","Item 3","Item 4"};
-//                ArrayAdapter<String> adapter = ArrayAdapter.createFromResource(myContext, listItems.length, R.layout.);
-
                 Intent intent = new Intent(MainActivity.this, SearchActivity.class);
                 //intent.putExtra("key", value); //Optional parameters
                 MainActivity.this.startActivity(intent);
-
-//                Resources res = getResources();
-//                menuTitles = res.getStringArray(R.array.titles);
-//                menuDescriptions = res.getStringArray(R.array.descriptions);
-//
-//                list = (ListView) findViewById(R.id.listView);
-//
-//                search.VivzAdapter adapter = new search.VivzAdapter(myContext, menuTitles, images, menuDescriptions);
-//                list.setAdapter(adapter);
             }
         });
 
@@ -202,11 +73,6 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
                 }
             }
         });
-
-
-
-        //End of Test
-
     }
 
     @Override
@@ -307,57 +173,6 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
     }
-
-
-    /**
-     * Created by Marcos Souza on 12/12/2014.
-     */
-//    public class UpdateApp extends AsyncTask<String, Integer, Bitmap> {
-//        @Override
-//        protected void onPreExecute() {
-//            //Setup
-//            super.onPreExecute();
-//        }
-//
-//        @Override
-//        protected Bitmap doInBackground(String... params) {
-//            try {
-//                URL url = new URL(params[0]);
-//                HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-//
-//                if (httpCon.getResponseCode() != 200) {
-//                    throw new Exception("Failed to Connect");
-//                }
-//
-//                InputStream is = httpCon.getInputStream();
-//                return BitmapFactory.decodeStream(is);
-//            } catch (Exception e) {
-//                Log.e("Image", " Failed to load image", e);
-//            }
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onProgressUpdate(Integer... values) {
-//            //Update a progress bar
-//            super.onProgressUpdate(values);
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Bitmap img) {
-//            ImageView iv = (ImageView) findViewById(R.id.main_image);
-//            if(iv!=null && img!=null){
-//                iv.setImageBitmap(img);
-//            }
-//        }
-//
-//        @Override
-//        protected void onCancelled() {
-//            //Handle what to do if you cancel this task
-//            //You should not be able to cancel this task anyway
-//            super.onCancelled();
-//        }
-//    }
 }
 
 
