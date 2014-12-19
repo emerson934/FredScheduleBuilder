@@ -224,7 +224,7 @@ public class SearchActivity extends Activity{//} implements
         switch (item.getItemId()) {
             case R.id.add_to_schedule:
                 myDataBase.open();
-                Toast.makeText(this, "ADD schedule", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "ADDED to schedule", Toast.LENGTH_SHORT).show();
 
                 myDataBase.updateSchedule(position, true);
                 myDataBase.close();
@@ -233,7 +233,7 @@ public class SearchActivity extends Activity{//} implements
                 break;
             case R.id.remove_from_schedule:
                 myDataBase.open();
-                Toast.makeText(this, "REMOVE schedule", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "REMOVED from schedule", Toast.LENGTH_SHORT).show();
                 myDataBase.updateSchedule(position, false);
                 myDataBase.close();
 //                deleteNote(info.id);
@@ -241,7 +241,7 @@ public class SearchActivity extends Activity{//} implements
                 break;
             case R.id.mark_as_done:
                 myDataBase.open();
-                Toast.makeText(this, "DONE", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "ADDED as DONE", Toast.LENGTH_SHORT).show();
                 myDataBase.updateRecord(position, true);
                 myDataBase.close();
 //                deleteNote(info.id);
@@ -249,7 +249,7 @@ public class SearchActivity extends Activity{//} implements
                   break;
             case R.id.mark_as_not_done:
                 myDataBase.open();
-                Toast.makeText(this, "NOT DONE", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "MARKED as NOT DONE", Toast.LENGTH_SHORT).show();
                 myDataBase.updateRecord(position, false);
                 myDataBase.close();
 //                deleteNote(info.id);

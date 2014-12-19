@@ -3,6 +3,8 @@ package com.example.emersontenorio.fredschedulebuilder;
 import android.content.Context;
 import android.database.Cursor;
 import android.text.TextUtils;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 /**
@@ -271,7 +273,7 @@ public class Builder {
         if(coursesFound != null){
             int resp = setAllNoTimeConflict(coursesFound);
             int times=0;
-            while((resp < 6) && (times < 3)){
+            while((resp < 4) && (times < 3)){
                 resp = removeConflict(coursesFound);
                 times++;
             }
@@ -281,13 +283,19 @@ public class Builder {
 
     public static int removeConflict(ArrayList<Course> course){
         int indMax = setConflictList(course);
-        course.remove(indMax);
 
-        //removing from schedule
-        DBAdapter myDataBase = new DBAdapter(context);
-        myDataBase.open();
-        myDataBase.updateSchedule(course.get(indMax).id, false);
-        myDataBase.close();
+        try{
+            course.remove(indMax);
+            //removing from schedule
+            DBAdapter myDataBase = new DBAdapter(context);
+            myDataBase.open();
+            myDataBase.updateSchedule(course.get(indMax).id, false);
+            myDataBase.close();
+        } catch (Exception e){
+            Toast.makeText(context, "Search RETURN TOO few results (Less than 4), Please change the search parameters!", Toast.LENGTH_LONG).show();
+        }
+
+
 
 
         return setAllNoTimeConflict(course);
@@ -310,6 +318,8 @@ public class Builder {
         }
         return indMax;
     }
+
+
 
 //    Takes all classes with no time conflicts
     public static int setAllNoTimeConflict(ArrayList<Course> course){

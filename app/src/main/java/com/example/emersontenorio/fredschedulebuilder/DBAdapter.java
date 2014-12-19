@@ -73,6 +73,15 @@ public class DBAdapter {
     private DatabaseHelper dbHelper;
     private /*static*/ SQLiteDatabase db;//edited by Marcos added (static)
 
+    //Marcos
+    public int countRows(){
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_NAME, null);
+        cursor.moveToFirst();
+        int counter = cursor.getInt(0);
+        cursor.close();
+        return counter;
+    }
+
     public DBAdapter(Context context) {
         this.context = context;
         this.dbHelper = new DatabaseHelper(context);
@@ -96,6 +105,9 @@ public class DBAdapter {
 //            loadFileIntoBD();//edited Marcos
 //            close();
         }
+
+
+
 
 
 
