@@ -5,21 +5,12 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.ViewGroup;
 import android.widget.GridLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-
 
 public class ScheduleActivity extends Activity implements HorizontalScrollViewListener {
 
@@ -32,7 +23,7 @@ public class ScheduleActivity extends Activity implements HorizontalScrollViewLi
 
     private int cellWidth, cellHeight, startTime, endTime;
 
-    private enum CellType {WEEKDAY, TIME, GRID, COURSE};
+    private enum CellType {WEEKDAY, TIME, GRID, COURSE}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -325,10 +316,10 @@ public class ScheduleActivity extends Activity implements HorizontalScrollViewLi
     private void loadCourse(String subject, String courseNumber, int sTime, int eTime, boolean ... weekdays) {
         if(weekdays == null || weekdays.length > 7) return;
 
-        int startHour = sTime/60,
-            startMinutes = sTime%60,
-            endHour = eTime/60,
-            endMinutes = eTime%60;
+//        int startHour = sTime/60,
+//            startMinutes = sTime%60,
+//            endHour = eTime/60,
+//            endMinutes = eTime%60;
 
         int row = (sTime - this.startTime)/10, spanning = (eTime - sTime)/10;
 
@@ -355,13 +346,11 @@ public class ScheduleActivity extends Activity implements HorizontalScrollViewLi
     private int getPixelsFromDip (int dipMeasure) {
         Resources resources = this.getResources();
 
-        int px = (int) TypedValue.applyDimension(
+        return (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
                 dipMeasure,
                 resources.getDisplayMetrics()
         );
-
-        return px;
     }
 
     private String minutesToTime(int totalMinutes){

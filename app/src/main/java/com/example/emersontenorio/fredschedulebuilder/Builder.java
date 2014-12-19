@@ -123,7 +123,7 @@ public class Builder {
 
         DBAdapter myDataBase = new DBAdapter(context);
 
-        ArrayList<Course> classes = new ArrayList<Course>();
+        ArrayList<Course> classes = new ArrayList<>();
 
         myDataBase.open();
 

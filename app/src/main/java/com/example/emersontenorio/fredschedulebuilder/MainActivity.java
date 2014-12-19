@@ -1,8 +1,8 @@
 package com.example.emersontenorio.fredschedulebuilder;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,10 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Toast;
-import java.util.ArrayList;
+import android.widget.Spinner;
 
 public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     /**
@@ -35,6 +34,29 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        View form = (View) findViewById(R.id.backColor);
+        form.setBackgroundColor(Color.argb(150, 100, 100, 100));
+
+        Spinner timeS = (Spinner) findViewById(R.id.timeS);
+        Spinner timeE = (Spinner) findViewById(R.id.timeE);
+        Spinner days = (Spinner) findViewById(R.id.days);
+        Spinner subj = (Spinner) findViewById(R.id.subject);
+
+        ArrayAdapter<CharSequence> adapterT1 = ArrayAdapter.createFromResource(this, R.array.times, android.R.layout.simple_spinner_item);
+        adapterT1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        ArrayAdapter<CharSequence> adapterD1 = ArrayAdapter.createFromResource(this, R.array.days, android.R.layout.simple_spinner_item);
+        adapterD1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        ArrayAdapter<CharSequence> adapterS1 = ArrayAdapter.createFromResource(this, R.array.subject, android.R.layout.simple_spinner_item);
+        adapterS1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        timeS.setAdapter(adapterT1);
+        timeE.setAdapter(adapterT1);
+        days.setAdapter(adapterD1);
+        subj.setAdapter(adapterS1);
+
+
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -45,8 +67,6 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         final String[] allDays = new String[]{"M", "W", "F", "T", "TH"};
-
-        final Context myContext = getBaseContext();
 
         Button btnSearch = (Button) findViewById(R.id.btnSearch);
         btnSearch.setOnClickListener(new View.OnClickListener(){
@@ -71,8 +91,8 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
             public void onClick(View v){
                 Builder builder = new Builder(getBaseContext());
                 builder.generateRandomSchedules(100, 2300, allDays, "CSIT");
-                ArrayList<Course> classes = builder.getCourses();
-                int scheduleSize = builder.getNumberCourses();
+//                ArrayList<Course> classes = builder.getCourses();
+//                int scheduleSize = builder.getNumberCourses();
 //                for (int i = 0; i < scheduleSize; i++) {
 //                    if (classes.get(i).name != null){
 //                        Toast.makeText(getBaseContext(), "Class: " + classes.get(i).subject +  " " + classes.get(i).course_number + "/  "  + classes.get(i).name + " in: " + i, Toast.LENGTH_SHORT).show();

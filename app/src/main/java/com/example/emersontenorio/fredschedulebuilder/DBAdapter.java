@@ -2,6 +2,7 @@ package com.example.emersontenorio.fredschedulebuilder;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
  * Created by Emerson Tenorio on 12/14/2014.
  */
 public class DBAdapter {
-    private static final int DATABASE_VERSION = 10;
+    private static final int DATABASE_VERSION = 12;//DO NOT CHANGE THIS
     public static final String DATABASE_NAME = "scheduledb.sqlite";
     public static final String TABLE_NAME = "course";
 
@@ -95,6 +96,8 @@ public class DBAdapter {
 //            loadFileIntoBD();//edited Marcos
 //            close();
         }
+
+
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -199,6 +202,12 @@ public class DBAdapter {
         int minute = time % 100;
 
         return hour*60 + minute;
+    }
+
+    public String convertMinuteToMinute(int time){
+        int hour = time/60;
+        int minute = time % 60;
+        return hour + ":" + minute;
     }
 
     //End Edited By Marcos
@@ -338,7 +347,7 @@ public class DBAdapter {
 
 
     public ArrayList<String> getAllCourses() {//static added marcos
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
 
         this.open();
 
@@ -351,7 +360,9 @@ public class DBAdapter {
                     String title = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_TITLE));
                     String scheduled = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SCHEDULED));
                     String subject = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SUBJECT));//Marcos
-                    list.add(id + " / " + title + " / schedule " + scheduled + " / " + subject);//Marcos
+                    String time = convertMinuteToMinute(Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_START_TIME))))
+                           + " - " + convertMinuteToMinute(Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_END_TIME))));
+                    list.add(id + " / " + title + " / " + scheduled + " / " + subject + " / " + time);//Marcos
                     cursor.moveToNext();
                 }
             }

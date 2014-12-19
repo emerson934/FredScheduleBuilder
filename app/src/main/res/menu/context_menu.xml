@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/add_to_schedule"
+        android:title="Add to Schedule"
+        android:icon="@drawable/ic_add"
+        android:onClick="doAction"
+        />
+
+    <item android:id="@+id/remove_from_schedule"
+        android:title="Remove from Schedule"
+        android:icon="@drawable/ic_remove"
+        android:onClick="doAction"
+         />
+
+    <item android:id="@+id/mark_as_done"
+        android:title="Mark as Done"
+        android:icon="@drawable/ic_done"
+        android:onClick="doAction"
+         />
+    <item android:id="@+id/mark_as_not_done"
+        android:title="Mark as NOT Done"
+        android:icon="@drawable/ic_not_done"
+        android:onClick="doAction"
+ />
+</menu>
