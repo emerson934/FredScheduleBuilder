@@ -59,66 +59,6 @@ public class SearchActivity extends ActionBarActivity {
     };
 
 
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event){
-//        this.mDetector.onTouchEvent(event);
-//        // Be sure to call the superclass implementation
-//        return super.onTouchEvent(event);
-//    }
-//
-//    @Override
-//    public boolean onDown(MotionEvent event) {
-//        Log.d(DEBUG_TAG, "onDown: " + event.toString());
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onFling(MotionEvent event1, MotionEvent event2,
-//                           float velocityX, float velocityY) {
-//        Log.d(DEBUG_TAG, "onFling: " + event1.toString()+event2.toString());
-//        return true;
-//    }
-//
-//    @Override
-//    public void onLongPress(MotionEvent event) {
-//        Log.d(DEBUG_TAG, "onLongPress: " + event.toString());
-//    }
-//
-//    @Override
-//    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-//                            float distanceY) {
-//        Log.d(DEBUG_TAG, "onScroll: " + e1.toString()+e2.toString());
-//        return true;
-//    }
-//
-//    @Override
-//    public void onShowPress(MotionEvent event) {
-//        Log.d(DEBUG_TAG, "onShowPress: " + event.toString());
-//    }
-//
-//    @Override
-//    public boolean onSingleTapUp(MotionEvent event) {
-//        Log.d(DEBUG_TAG, "onSingleTapUp: " + event.toString());
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onDoubleTap(MotionEvent event) {
-//        Log.d(DEBUG_TAG, "onDoubleTap: " + event.toString());
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onDoubleTapEvent(MotionEvent event) {
-//        Log.d(DEBUG_TAG, "onDoubleTapEvent: " + event.toString());
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onSingleTapConfirmed(MotionEvent event) {
-//        Log.d(DEBUG_TAG, "onSingleTapConfirmed: " + event.toString());
-//        return true;
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -510,9 +450,6 @@ public class SearchActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.delete_schedule) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -538,14 +475,10 @@ public class SearchActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
-
         // Associate searchable configuration with the SearchView
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         MenuItemCompat.setOnActionExpandListener(menu.findItem(R.id.search), new MenuItemCompat.OnActionExpandListener() {
             @Override

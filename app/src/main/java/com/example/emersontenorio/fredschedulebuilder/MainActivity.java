@@ -5,6 +5,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -13,8 +15,26 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent = new Intent(this, ScheduleActivity.class);
-        startActivity(intent);
+
+        Button btnSchedule = (Button) findViewById(R.id.btnSchedule);
+
+        btnSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), ScheduleActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button btnSearch = (Button) findViewById(R.id.btnSearch);
+
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), SearchActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -37,6 +57,8 @@ public class MainActivity extends ActionBarActivity {
             startActivity(intent);
             return true;
         } else if (id == R.id.search) {
+            Intent intent = new Intent(this, SearchActivity.class);
+            startActivity(intent);
             return true;
         }
 

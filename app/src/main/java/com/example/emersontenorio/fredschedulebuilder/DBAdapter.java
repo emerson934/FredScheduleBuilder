@@ -78,11 +78,14 @@ public class DBAdapter {
         this.dbHelper = new DatabaseHelper(context);
         this.columns = new String[] {
                 COL_ID,
+                COL_CRN,
                 COL_SUBJECT,
                 COL_COURSE_NUMBER,
                 COL_SECTION,
                 COL_CREDIT,
                 COL_TITLE,
+                COL_INSTRUCTOR,
+                COL_DESCRIPTION,
                 COL_START_TIME,
                 COL_END_TIME,
                 COL_SUNDAY,
@@ -316,8 +319,10 @@ public class DBAdapter {
                     String title = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_TITLE));
                     String scheduled = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SCHEDULED));
                     String subject = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SUBJECT));//Marcos
-                    String time = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_START_TIME)))
-                           + " - " + Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_END_TIME)));
+                    String time =
+                            Util.convertMinuteToHourMinute(Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_START_TIME))))
+                            + " - " +
+                            Util.convertMinuteToHourMinute(Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_END_TIME))));
                     list.add(id + " / " + title + " / " + scheduled + " / " + subject + " / " + time);//Marcos
                     cursor.moveToNext();
                 }
