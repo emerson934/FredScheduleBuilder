@@ -28,8 +28,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
-import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -43,20 +43,21 @@ public class SearchActivity extends ActionBarActivity {
     String[] menuTitles;
     String[] menuDescriptions;
     String[] menuTimes;
+    int[] courseListIds;
     int[] images = {
-            R.drawable.csit2,
-            R.drawable.csit3,
-            R.drawable.csit4,
-            R.drawable.mobile1,
-            R.drawable.mobile3,
-            R.drawable.csit2,
-            R.drawable.csit3,
-            R.drawable.csit4,
-            R.drawable.mobile1,
-            R.drawable.mobile3,
-            R.drawable.csit2
+            R.drawable.ic_computer,
+            R.drawable.ic_computer,
+            R.drawable.ic_computer,
+            R.drawable.ic_computer,
+            R.drawable.ic_computer,
+            R.drawable.ic_computer,
+            R.drawable.ic_computer,
+            R.drawable.ic_computer,
+            R.drawable.ic_computer,
+            R.drawable.ic_computer,
+            R.drawable.ic_computer
     };
-    DBAdapter db = new DBAdapter(this);
+
 
 //    @Override
 //    public boolean onTouchEvent(MotionEvent event){
@@ -123,8 +124,8 @@ public class SearchActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_main);
-        setContentView(R.layout.search_view);
         setContentView(R.layout.activity_search);
+
 
 
         // Instantiate the gesture detector with the
@@ -137,7 +138,7 @@ public class SearchActivity extends ActionBarActivity {
 
 
         Intent intent = getIntent();
-        handleIntent(intent);
+
         //String value = intent.getStringExtra("key"); //if it's a string you stored.
 
         //final Resources res = getResources();//
@@ -150,7 +151,7 @@ public class SearchActivity extends ActionBarActivity {
         //VivzAdapter adapter = new VivzAdapter(this, menuTitles, images, menuDescriptions);
         //list.setAdapter(adapter);
         displayAll();
-        handleIntent(getIntent());
+        handleIntent(intent);
     }
     @Override
     protected void onNewIntent(Intent intent) {
@@ -197,7 +198,7 @@ public class SearchActivity extends ActionBarActivity {
                     }
                     list = (ListView) findViewById(R.id.listView);
 
-                    VivzAdapter adapter = new VivzAdapter(getBaseContext(), menuTitles, images, menuDescriptions);
+                    VivzAdapter adapter = new VivzAdapter(getBaseContext(), menuTitles, images, menuDescriptions, /*new*/ courseListIds, menuTimes);
                     list.setAdapter(adapter);
                 }
                 cursor.close();
@@ -216,7 +217,7 @@ public class SearchActivity extends ActionBarActivity {
         DBAdapter myDataBase = new DBAdapter(getBaseContext());
 
         myDataBase.open();
-        myDataBase.loadDictionary();
+//        myDataBase.loadFileIntoBD();
 
         ArrayList<String> allMyCourses = myDataBase.getAllCourses();//edited MArcos
 
@@ -254,8 +255,8 @@ public class SearchActivity extends ActionBarActivity {
         list = (ListView) findViewById(R.id.listView);
                 list = (ListView) findViewById(R.id.listView);
 
-        VivzAdapter adapter = new VivzAdapter(getBaseContext(), menuTitles, images, menuDescriptions);
-        list.setAdapter(adapter);
+//        VivzAdapter adapter = new VivzAdapter(getBaseContext(), menuTitles, images, menuDescriptions);
+//        list.setAdapter(adapter);
                 VivzAdapter adapter = new VivzAdapter(getBaseContext(), menuTitles, images, menuDescriptions, /*new*/ courseListIds, menuTimes);
                 list.setAdapter(adapter);
 
@@ -413,21 +414,6 @@ public class SearchActivity extends ActionBarActivity {
 //        }
 //    }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        handleIntent(intent);
-    }
-
-    private void handleIntent(Intent intent) {
-        //use the query to search your data
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-//            String query = intent.getStringExtra(SearchManager.QUERY);
-//            Cursor c = db.getWordMatches(query, null);
-            //process Cursor and display results
-
-    static class VivzAdapter extends ArrayAdapter<String> {
-        }
-    }
 
     class VivzAdapter extends ArrayAdapter<String>
     {
@@ -435,9 +421,9 @@ public class SearchActivity extends ActionBarActivity {
         int[] images;
         String[] titleArray;
         String[] descriptionArray;
-
-        VivzAdapter(Context c, String[] titles, int imgs[], String[] desc) {
-            super(c, R.layout.single_row, R.id.textView, titles);
+//
+//        VivzAdapter(Context c, String[] titles, int imgs[], String[] desc) {
+//            super(c, R.layout.single_row, R.id.textView, titles);
         int[] courseListArray;
         String[] timeArray;
 
@@ -452,7 +438,7 @@ public class SearchActivity extends ActionBarActivity {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+//        public View getView(int position, View convertView, ViewGroup parent) {
         public View getView(final int position, View convertView, ViewGroup parent){
 
             View row = convertView;
@@ -502,8 +488,6 @@ public class SearchActivity extends ActionBarActivity {
             }
 
             myDataBase.close();
-
-
             return row;
         }
     }
@@ -523,7 +507,7 @@ public class SearchActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.delete_schedule) {
             return true;
         }
 
@@ -546,12 +530,7 @@ public class SearchActivity extends ActionBarActivity {
 //        return true;
 //    }
 
-    public boolean onActionViewCollapsed(MenuItem item) {
-        //do what you want to when close the sesarchview
-        //remember to return true;
-        displayAll();
-        return true;
-    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -584,4 +563,4 @@ public class SearchActivity extends ActionBarActivity {
 
 }
 
-}
+//}
