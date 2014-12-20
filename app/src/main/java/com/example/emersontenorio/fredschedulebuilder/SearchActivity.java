@@ -467,6 +467,7 @@ public class SearchActivity extends ActionBarActivity {
                 public void onClick(View v){
                     Intent intent = new Intent(getBaseContext(), CourseActivity.class);
                     intent.putExtra("id", position);
+                    startActivity(intent);
                     Toast.makeText(context, "Item " + courseListArray[position] + " Clicked! In position: " + position, Toast.LENGTH_SHORT).show();
                 }
             });

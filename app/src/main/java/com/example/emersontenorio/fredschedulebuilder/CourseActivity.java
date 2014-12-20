@@ -2,6 +2,7 @@ package com.example.emersontenorio.fredschedulebuilder;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,12 +20,17 @@ public class CourseActivity extends ActionBarActivity {
         setContentView(R.layout.activity_course);
         Intent intent = getIntent();
         DBAdapter myDataBase = new DBAdapter(this);
+        SQLiteDatabase db;
+
         myDataBase.open();
-        Cursor cursor = myDataBase.getRecord(intent.getIntExtra("id", 0));
-        ArrayList<String> list = new ArrayList<>();
+        int id = intent.getExtras().getInt("id");
+        System.out.println("IDddddddd: " + id);
+//        Cursor cursor = myDataBase.getRecord(intent.getExtras().getInt("id"));
+        Cursor cursor = myDataBase.getAllRecords();
+
         if(cursor != null) {
             if (cursor.moveToFirst()) {
-
+                while(!cursor.isAfterLast()) {
                     String description = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_DESCRIPTION));
                     String title = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_TITLE));
                     String instructor = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_INSTRUCTOR));
@@ -32,16 +38,19 @@ public class CourseActivity extends ActionBarActivity {
                     String time = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_START_TIME)))
                             + " - " + Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_END_TIME)));
 
-                TextView courseTitle = (TextView)findViewById(R.id.course_name);
-                courseTitle.setText(title);
-                TextView professor = (TextView)findViewById(R.id.professor_name);
-                professor.setText(instructor);
-                TextView timeCourse = (TextView)findViewById(R.id.course_time);
-                timeCourse.setText(time);
-                TextView credits = (TextView)findViewById(R.id.course_credits);
-                credits.setText(course_credits);
-                TextView courseDescription = (TextView)findViewById(R.id.description);
-                courseDescription.setText(description);
+                    System.out.println("Description: " + title);
+                    TextView courseTitle = (TextView) findViewById(R.id.course_name);
+                    courseTitle.setText(title);
+                    TextView professor = (TextView) findViewById(R.id.professor_name);
+                    professor.setText(instructor);
+                    TextView timeCourse = (TextView) findViewById(R.id.course_time);
+                    timeCourse.setText(time);
+                    TextView credits = (TextView) findViewById(R.id.course_credits);
+                    credits.setText(course_credits);
+                    TextView courseDescription = (TextView) findViewById(R.id.description);
+                    courseDescription.setText(description);
+
+                }
             }
             cursor.close();
 
@@ -54,7 +63,7 @@ public class CourseActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -66,14 +75,9 @@ public class CourseActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.schedule) {
-            Intent intent = new Intent(this, ScheduleActivity.class);
-            startActivity(intent);
+       /* if (id == R.id.action_settings) {
             return true;
-        } else if (id == R.id.search) {
-            return true;
-        }
-
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
