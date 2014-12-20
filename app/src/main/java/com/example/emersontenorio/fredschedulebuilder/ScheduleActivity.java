@@ -1,18 +1,22 @@
 package com.example.emersontenorio.fredschedulebuilder;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
-public class ScheduleActivity extends Activity implements HorizontalScrollViewListener {
+public class ScheduleActivity extends ActionBarActivity implements HorizontalScrollViewListener {
 
     private GridLayout frozenGridHeader;
     private GridLayout contentGridHeader;
@@ -24,6 +28,8 @@ public class ScheduleActivity extends Activity implements HorizontalScrollViewLi
     private int cellWidth, cellHeight, startTime, endTime;
 
     private enum CellType {WEEKDAY, TIME, GRID, COURSE}
+
+    DBAdapter myDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,7 +170,7 @@ public class ScheduleActivity extends Activity implements HorizontalScrollViewLi
     }
 
     public void getSchedule() {
-        DBAdapter myDB = new DBAdapter(this);
+        myDB = new DBAdapter(this);
         myDB.open();
 
         Cursor cursor = myDB.getScheduledRecords();
@@ -222,5 +228,36 @@ public class ScheduleActivity extends Activity implements HorizontalScrollViewLi
                 dipMeasure,
                 resources.getDisplayMetrics()
         );
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.schedule) {
+            Intent intent = new Intent(this, ScheduleActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.search) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        myDB.close();
     }
 }

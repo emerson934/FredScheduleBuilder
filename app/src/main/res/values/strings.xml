@@ -2,8 +2,10 @@
 <resources>
 
     <string name="app_name">FredScheduleBuilder</string>
+    <string name="title">Schedule Builder</string>
     <string name="title_section1">Schedule</string>
     <string name="title_section2">Search Courses</string>
+    <string name="title_section3">Pre-Enroll</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="clear_done">Clear Done Courses</string>
