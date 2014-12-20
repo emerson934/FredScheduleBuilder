@@ -56,178 +56,9 @@ public class ScheduleActivity extends Activity implements HorizontalScrollViewLi
         InitializeInitialData();
     }
 
-    public void getSchedule(){
-        DBAdapter myDB = new DBAdapter(this);
-        myDB.open();
-
-        Cursor cursor = myDB.getAllRecords();
-
-        if(cursor != null) {
-            if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
-                    int scheduled = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SCHEDULED)));
-                    if(scheduled == 1){
-                        String subject = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SUBJECT));//Marcos
-                        String course_number = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_COURSE_NUMBER));
-                        int startTime = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_START_TIME)));
-                        int endTime = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_END_TIME)));
-                        int monday =    Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SUNDAY)));
-                        int tuesday =   Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_MONDAY)));
-                        int wednesday = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_TUESDAY)));
-                        int thursday =  Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_WEDNESDAY)));
-                        int friday =    Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_THURSDAY)));
-                        int saturday =  Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_FRIDAY)));
-                        int sunday =    Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SATURDAY)));
-
-                        boolean monday1, tuesday1, wednesday1, thursday1, friday1, saturday1, sunday1;
-                        monday1 = tuesday1 = wednesday1 = thursday1 = friday1 = saturday1 = sunday1 = false;
-
-                        if (monday == 1){
-                            monday1 =true;
-                        }
-                        if (tuesday ==1){
-                            tuesday1 = true;
-                        }
-                        if (wednesday ==1){
-                            wednesday1 = true;
-                        }
-                        if (thursday == 1){
-                            thursday1 = true;
-                        }
-                        if (friday == 1){
-                            friday1 = true;
-                        }
-                        if (saturday == 1){
-                            saturday1 = true;
-                        }
-                        if (sunday == 1){
-                            sunday1 = true;
-                        }
-//                        Toast.makeText(this, course_number, Toast.LENGTH_SHORT).show();
-
-                        loadCourse(subject, course_number, startTime, endTime, monday1, tuesday1, wednesday1, thursday1, friday1, saturday1, sunday1);
-                    }
-                    cursor.moveToNext();
-                }
-            }
-            cursor.close();
-        }
-        myDB.close();
-
-    }
-
     protected void InitializeInitialData() {
         populateHeaders();
-
         getSchedule();
-
-        // --- test ---
-//        loadCourse("CSIT", "171", 780, 830, true, false, true, false, true, false, false);
-
-
-//
-//
-//        ArrayList<Course> coursesScheduled = Builder.getCourses();
-//
-//        for (int i = 0; i < coursesScheduled.size(); i++) {
-//            loadCourse(coursesScheduled.get(i).subject, coursesScheduled.get(i).course_number + "",
-//                    coursesScheduled.get(i).startTime, coursesScheduled.get(i).endTime, true, false, true, false, true, false, false);
-//        }
-//
-//        final String[] allDays = new String[]{"M", "W", "F", "T", "TH"};
-//        Builder builder = new Builder(getBaseContext());
-//        builder.generateRandomSchedules(100, 2300, allDays, "CSIT");
-//        ArrayList<Course> classes = builder.getCourses();
-//        int scheduleSize = builder.getNumberCourses();
-//
-//        for (int i = 0; i < scheduleSize; i++) {
-//            boolean monday, tuesday, wednesday, thursday, friday, saturday, sunday;
-//            monday = tuesday = wednesday = thursday = friday = saturday = sunday = false;
-//            for (int j = 0; j < classes.get(i).days.length; j++) {
-//                if (classes.get(i).days[i].equals("M")){
-//                    monday = true;
-//                }
-//                if (classes.get(i).days[i].equals("T")){
-//                    tuesday = true;
-//                }
-//                if (classes.get(i).days[i].equals("W")){
-//                    wednesday = true;
-//                }
-//                if (classes.get(i).days[i].equals("R")){
-//                    thursday = true;
-//                }
-//                if (classes.get(i).days[i].equals("F")){
-//                    friday = true;
-//                }
-//                if (classes.get(i).days[i].equals("S")){
-//                    saturday = true;
-//                }
-//                if (classes.get(i).days[i].equals("U")){
-//                    sunday = true;
-//                }
-//            }
-//
-//            Toast.makeText(this, monday + "," + tuesday + "," + wednesday + "," + thursday + "," + friday + "," + saturday + "," + sunday, Toast.LENGTH_LONG).show();
-//            loadCourse(classes.get(i).subject, classes.get(i).course_number + "",
-//                    classes.get(i).startTime, classes.get(i).endTime, monday, tuesday, wednesday, thursday, friday, saturday, sunday);
-//        }
-
-//        DBAdapter myDB = new DBAdapter(this);
-//        myDB.open();
-//
-//        Cursor cursor = myDB.getAllRecords();
-//
-//        if(cursor != null) {
-//            if (cursor.moveToFirst()) {
-//                while (!cursor.isAfterLast()) {
-//                    int scheduled = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SCHEDULED)));
-//                    if(scheduled == 1){
-//                        String subject = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SUBJECT));//Marcos
-//                        String course_number = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_COURSE_NUMBER));
-//                        int startTime = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_START_TIME)));
-//                        int endTime = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_END_TIME)));
-//                        int monday =    Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SUNDAY)));
-//                        int tuesday =   Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_MONDAY)));
-//                        int wednesday = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_TUESDAY)));
-//                        int thursday =  Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_WEDNESDAY)));
-//                        int friday =    Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_THURSDAY)));
-//                        int saturday =  Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_FRIDAY)));
-//                        int sunday =    Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SATURDAY)));
-//
-//                        boolean monday1, tuesday1, wednesday1, thursday1, friday1, saturday1, sunday1;
-//                        monday1 = tuesday1 = wednesday1 = thursday1 = friday1 = saturday1 = sunday1 = false;
-//
-//                        if (monday == 1){
-//                            monday1 =true;
-//                        }
-//                        if (tuesday ==1){
-//                            tuesday1 = true;
-//                        }
-//                        if (wednesday ==1){
-//                            wednesday1 = true;
-//                        }
-//                        if (thursday == 1){
-//                            thursday1 = true;
-//                        }
-//                        if (friday == 1){
-//                            friday1 = true;
-//                        }
-//                        if (saturday == 1){
-//                            saturday1 = true;
-//                        }
-//                        if (sunday == 1){
-//                            sunday1 = true;
-//                        }
-//                        Toast.makeText(this, course_number, Toast.LENGTH_SHORT).show();
-//
-//                        loadCourse(subject, course_number, startTime, endTime, monday1, tuesday1, wednesday1, thursday1, friday1, saturday1, sunday1);
-//                    }
-//                    cursor.moveToNext();
-//                }
-//            }
-//            cursor.close();
-//        }
-//        myDB.close();
     }
 
     public void onScrollChanged(ObservableHorizontalScrollView scrollView, int x, int y, int oldX, int oldY) {
@@ -254,7 +85,7 @@ public class ScheduleActivity extends Activity implements HorizontalScrollViewLi
 
         // --- Add time header ---
         for(int i = startTime; i < endTime; i+= 60) {
-            TextView timeCell = getCell(minutesToTime(i), CellType.TIME);
+            TextView timeCell = getCell(Util.convertMinutesToHour(i), CellType.TIME);
             frozenGrid.addView(timeCell);
         }
 
@@ -316,17 +147,11 @@ public class ScheduleActivity extends Activity implements HorizontalScrollViewLi
     private void loadCourse(String subject, String courseNumber, int sTime, int eTime, boolean ... weekdays) {
         if(weekdays == null || weekdays.length > 7) return;
 
-//        int startHour = sTime/60,
-//            startMinutes = sTime%60,
-//            endHour = eTime/60,
-//            endMinutes = eTime%60;
-
         int row = (sTime - this.startTime)/10, spanning = (eTime - sTime)/10;
 
         for (int col = 0; col < weekdays.length; col++) {
             if(weekdays[col]) {
-
-                TextView cell = getCell(subject + "\n" /*Added Marcos*/ + courseNumber + "\n" /*End Addition*/ /*Removed by MArcos  + getRowSpanSize(spanning) End removing*/, CellType.COURSE);
+                TextView cell = getCell(subject + "\n" + courseNumber, CellType.COURSE);
 
                 cell.setMinimumHeight(getRowSpanSize(spanning));
 
@@ -336,6 +161,52 @@ public class ScheduleActivity extends Activity implements HorizontalScrollViewLi
                 ));
             }
         }
+    }
+
+    public void getSchedule() {
+        DBAdapter myDB = new DBAdapter(this);
+        myDB.open();
+
+        Cursor cursor = myDB.getScheduledRecords();
+
+        if(cursor != null) {
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    int scheduled = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SCHEDULED)));
+                    String subject       = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SUBJECT));
+                    String course_number = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_COURSE_NUMBER));
+                    int startTime   = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_START_TIME)));
+                    int endTime     = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_END_TIME)));
+                    int monday      = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SUNDAY)));
+                    int tuesday     = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_MONDAY)));
+                    int wednesday   = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_TUESDAY)));
+                    int thursday    = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_WEDNESDAY)));
+                    int friday      = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_THURSDAY)));
+                    int saturday    = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_FRIDAY)));
+                    int sunday      = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SATURDAY)));
+
+                    boolean[] weekDays = new boolean[7];
+
+                    for(boolean day : weekDays) {
+                        day = false;
+                    }
+
+                    if (monday == 1) weekDays[0] = true;
+                    if (tuesday ==1) weekDays[1] = true;
+                    if (wednesday ==1) weekDays[2] = true;
+                    if (thursday == 1) weekDays[3] = true;
+                    if (friday == 1) weekDays[4] = true;
+                    if (saturday == 1) weekDays[5] = true;
+                    if (sunday == 1) weekDays[6] = true;
+
+                    loadCourse(subject, course_number, startTime, endTime, weekDays);
+                    cursor.moveToNext();
+                }
+            }
+            cursor.close();
+        }
+        myDB.close();
+
     }
 
     private int getRowSpanSize(int span) {
@@ -351,21 +222,5 @@ public class ScheduleActivity extends Activity implements HorizontalScrollViewLi
                 dipMeasure,
                 resources.getDisplayMetrics()
         );
-    }
-
-    private String minutesToTime(int totalMinutes){
-        int hours = totalMinutes / 60;
-        // --- Returns nothing
-        if(totalMinutes%60 != 0) return "";
-        // --- Set PM/AM ---
-        switch (hours) {
-            case 8:
-                return "0"+ hours + "\nAM";
-            case 12:
-                return hours + "\nPM";
-        }
-        // --- Return the hour
-        hours = (hours > 12)? hours - 12 : hours;
-        return (hours < 10)? "0" + hours : hours + "";
     }
 }

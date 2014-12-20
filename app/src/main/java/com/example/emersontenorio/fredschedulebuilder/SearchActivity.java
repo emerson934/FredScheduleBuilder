@@ -149,12 +149,12 @@ public class SearchActivity extends Activity{//} implements
 //        Button btnF = (Button) findViewById(R.id.btnSearch);
 //        btnF.setOnClickListener(new View.OnClickListener(){
 //            public void onClick(View v){
-                DBAdapter myDataBase = new DBAdapter(getBaseContext());
+                DBAdapter myDataBase = new DBAdapter(this);
 
                 myDataBase.open();
 //                myDataBase.loadFileIntoBD();
 
-                ArrayList<String> allMyCourses = myDataBase.getAllCourses();//edited MArcos
+                ArrayList<String> allMyCourses = myDataBase.getAllCourses();
 
                 myDataBase.close();
 
@@ -354,8 +354,8 @@ public class SearchActivity extends Activity{//} implements
         String[] descriptionArray;
         int[] courseListArray;
         String[] timeArray;
-        VivzAdapter(Context c, String[] titles, int imgs[], String[] desc, int[] courseIds, String[] time)
-        {
+
+        VivzAdapter(Context c, String[] titles, int imgs[], String[] desc, int[] courseIds, String[] time) {
             super(c, R.layout.course_list_item, R.id.textView, titles);
             this.context = c;
             this.images = imgs;
