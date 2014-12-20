@@ -8,6 +8,9 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v4.view.GestureDetectorCompat;
 import android.text.TextUtils;
 import android.util.Log;
@@ -22,11 +25,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,33 +37,27 @@ import java.util.ArrayList;
 /**
  * Created by Marcos Souza on 12/15/2014.
  */
-public class SearchActivity extends Activity{//} implements
-//        GestureDetector.OnGestureListener,
-//        GestureDetector.OnDoubleTapListener{
-
-//    private static final String DEBUG_TAG = "Gestures";
-//    private GestureDetectorCompat mDetector;
-
-
+public class SearchActivity extends ActionBarActivity {
     ListView list;
-//    DBAdapter db = new DBAdapter(this);
-    int[] courseListIds;
+    DBAdapter db = new DBAdapter(this);
     String[] menuTitles;
     String[] menuDescriptions;
     String[] menuTimes;
+    int[] courseListIds;
     int[] images = {
-            R.drawable.csit2,
-            R.drawable.csit3,
-            R.drawable.csit4,
-            R.drawable.mobile1,
-            R.drawable.mobile3,
-            R.drawable.csit2,
-            R.drawable.csit3,
-            R.drawable.csit4,
-            R.drawable.mobile1,
-            R.drawable.mobile3,
-            R.drawable.csit2
+            R.drawable.ic_computer,
+            R.drawable.ic_computer,
+            R.drawable.ic_computer,
+            R.drawable.ic_computer,
+            R.drawable.ic_computer,
+            R.drawable.ic_computer,
+            R.drawable.ic_computer,
+            R.drawable.ic_computer,
+            R.drawable.ic_computer,
+            R.drawable.ic_computer,
+            R.drawable.ic_computer
     };
+
 
 //    @Override
 //    public boolean onTouchEvent(MotionEvent event){
@@ -128,7 +123,9 @@ public class SearchActivity extends Activity{//} implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_main);
         setContentView(R.layout.activity_search);
+
 
 
         // Instantiate the gesture detector with the
@@ -141,21 +138,95 @@ public class SearchActivity extends Activity{//} implements
 
 
         Intent intent = getIntent();
-        handleIntent(intent);
+
         //String value = intent.getStringExtra("key"); //if it's a string you stored.
 
+        //final Resources res = getResources();//
+//        menuTitles = res.getStringArray(R.array.titles);
+//        menuDescriptions = res.getStringArray(R.array.descriptions);
+//
+        //list = (ListView) findViewById(R.id.listView);
 //        final Resources res = getResources();
 
+        //VivzAdapter adapter = new VivzAdapter(this, menuTitles, images, menuDescriptions);
+        //list.setAdapter(adapter);
+        displayAll();
+        handleIntent(intent);
+    }
+    @Override
+    protected void onNewIntent(Intent intent) {
+        setIntent(intent);
+        handleIntent(intent);
+    }
 //        Button btnF = (Button) findViewById(R.id.btnSearch);
 //        btnF.setOnClickListener(new View.OnClickListener(){
 //            public void onClick(View v){
                 DBAdapter myDataBase = new DBAdapter(this);
 
+    private void handleIntent(Intent intent) {
+        //use the query to search your data
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+
+            db.open();
                 myDataBase.open();
 //                myDataBase.loadFileIntoBD();
 
+            Cursor cursor = db.getCourseMatches(query, null);
+            ArrayList<String> results = new ArrayList<String>();
                 ArrayList<String> allMyCourses = myDataBase.getAllCourses();
 
+            //process Cursor and display results
+            if(cursor != null) {
+
+                if (cursor.moveToFirst()) {
+                    while (!cursor.isAfterLast()) {
+                        String id = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_ID));
+                        String title = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_TITLE));
+                        String scheduled = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SCHEDULED));
+                        String subject = cursor.getString(cursor.getColumnIndex(DBAdapter.COL_SUBJECT));
+                        results.add(id + " / " + title + " / schedule " + scheduled + " / " + subject);
+                        cursor.moveToNext();
+                    }
+                    menuTitles = new String[results.size()];
+                    menuDescriptions = new String[results.size()];
+
+                    for (int i = 0; i < results.size(); i++) {
+                        String[] strings = TextUtils.split(results.get(i), "/");
+                        menuTitles[i] = strings[3].trim();
+                        menuDescriptions[i] = strings[1].trim();
+                    }
+                    list = (ListView) findViewById(R.id.listView);
+
+                    VivzAdapter adapter = new VivzAdapter(getBaseContext(), menuTitles, images, menuDescriptions, /*new*/ courseListIds, menuTimes);
+                    list.setAdapter(adapter);
+                }
+                cursor.close();
+            }
+            else
+            {
+                list.setAdapter(null);
+            }
+            db.close();
+        } else {
+            displayAll();
+        }
+    }
+
+   public void displayAll(){
+        DBAdapter myDataBase = new DBAdapter(getBaseContext());
+
+        myDataBase.open();
+//        myDataBase.loadFileIntoBD();
+
+        ArrayList<String> allMyCourses = myDataBase.getAllCourses();//edited MArcos
+
+        myDataBase.close();
+//                for (int i = 0; i < allMyCourses.size(); i++) {
+//                    Toast.makeText(getBaseContext(), "Course in the DB: " + allMyCourses.get(i), Toast.LENGTH_SHORT).show();
+//                }
+        menuTitles = new String[allMyCourses.size()];
+        menuDescriptions = new String[allMyCourses.size()];
                 myDataBase.close();
 
                 menuTitles = new String[allMyCourses.size()];
@@ -163,6 +234,11 @@ public class SearchActivity extends Activity{//} implements
                 courseListIds = new int[allMyCourses.size()];
                 menuTimes = new String[allMyCourses.size()];
 
+        for (int i = 0; i < allMyCourses.size(); i++) {
+            String[] strings = TextUtils.split(allMyCourses.get(i), "/");
+            menuTitles[i] = strings[3].trim();
+            menuDescriptions[i] = strings[1].trim();
+        }
                 for (int i = 0; i < allMyCourses.size(); i++) {
                     String[] strings = TextUtils.split(allMyCourses.get(i), "/");
                     menuTitles[i] = strings[3].trim();
@@ -172,8 +248,15 @@ public class SearchActivity extends Activity{//} implements
 
                 }
 
+
+//                menuTitles = res.getStringArray(R.array.titles);
+//                menuDescriptions = res.getStringArray(R.array.descriptions);
+
+        list = (ListView) findViewById(R.id.listView);
                 list = (ListView) findViewById(R.id.listView);
 
+//        VivzAdapter adapter = new VivzAdapter(getBaseContext(), menuTitles, images, menuDescriptions);
+//        list.setAdapter(adapter);
                 VivzAdapter adapter = new VivzAdapter(getBaseContext(), menuTitles, images, menuDescriptions, /*new*/ courseListIds, menuTimes);
                 list.setAdapter(adapter);
 
@@ -331,20 +414,6 @@ public class SearchActivity extends Activity{//} implements
 //        }
 //    }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        handleIntent(intent);
-    }
-
-    private void handleIntent(Intent intent) {
-        //use the query to search your data
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-//            String query = intent.getStringExtra(SearchManager.QUERY);
-//            Cursor c = db.getWordMatches(query, null);
-            //process Cursor and display results
-
-        }
-    }
 
     class VivzAdapter extends ArrayAdapter<String>
     {
@@ -352,6 +421,9 @@ public class SearchActivity extends Activity{//} implements
         int[] images;
         String[] titleArray;
         String[] descriptionArray;
+//
+//        VivzAdapter(Context c, String[] titles, int imgs[], String[] desc) {
+//            super(c, R.layout.single_row, R.id.textView, titles);
         int[] courseListArray;
         String[] timeArray;
 
@@ -366,13 +438,15 @@ public class SearchActivity extends Activity{//} implements
         }
 
         @Override
+//        public View getView(int position, View convertView, ViewGroup parent) {
         public View getView(final int position, View convertView, ViewGroup parent){
 
             View row = convertView;
-            if(row==null){
+            if (row == null) {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 row = inflater.inflate(R.layout.course_list_item, parent, false);
             }
+
 
             ImageView myImage = (ImageView) row.findViewById(R.id.imageView);
             TextView myTitle = (TextView) row.findViewById(R.id.textView);
@@ -381,9 +455,9 @@ public class SearchActivity extends Activity{//} implements
             //change position if you want to change the image
 //            myImage.setImageResource(images[position]);
             myTitle.setText(titleArray[position]);
-            if (titleArray[position].equals("CSIT")){
+            if (titleArray[position].equals("CSIT")) {
                 myImage.setImageResource(images[2]);
-            } else{
+            } else {
                 myImage.setImageResource(images[4]);
             }
             myTitle.setText(descriptionArray[position]);
@@ -416,8 +490,6 @@ public class SearchActivity extends Activity{//} implements
             }
 
             myDataBase.close();
-
-
             return row;
         }
     }
@@ -437,12 +509,29 @@ public class SearchActivity extends Activity{//} implements
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.delete_schedule) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    //    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        System.out.println("Chamou!");
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.options_menu, menu);
+//
+//        // Associate searchable configuration with the SearchView
+//        SearchManager searchManager =
+//                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        SearchView searchView =
+//                (SearchView) menu.findItem(R.id.search).getActionView();
+//        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+//
+//        return true;
+//    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -457,8 +546,23 @@ public class SearchActivity extends Activity{//} implements
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
 
+        MenuItemCompat.setOnActionExpandListener(menu.findItem(R.id.search), new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                displayAll();
+                // Do something when collapsed
+                return true;  // Return true to collapse action view
+            }
+
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                // Do something when expanded
+                return true;  // Return true to expand action view
+            }
+        });
         return true;
     }
 
-
 }
+
+//}

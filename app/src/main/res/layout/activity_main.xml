@@ -1,163 +1,18 @@
 <!-- A DrawerLayout is intended to be used as the top-level content view using match_parent for both width and height to consume the full space available. -->
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/drawer_layout"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".MainActivity">
 
     <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
-    <FrameLayout android:id="@+id/container" android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        android:background="@drawable/background"
-        >
-
-        <ImageView
-            android:id="@+id/main_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Schedule"
-            android:id="@+id/btnSchedule"
-            android:layout_gravity="right|top"
-            android:outlineProvider="background" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Search"
-            android:id="@+id/btnSearch"
-            android:layout_gravity="left|top"
-            android:outlineProvider="background" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:id="@+id/backColor">
-
-            <!--<group-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:id="@+id/formColor">-->
-
-                <Spinner
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/timeS"
-                    android:layout_alignWithParentIfMissing="false"
-                    android:layout_below="@+id/textView3"
-                    android:layout_alignLeft="@+id/textView3"
-                    android:layout_alignStart="@+id/textView3"
-                    android:layout_alignRight="@+id/textView3"
-                    android:layout_alignEnd="@+id/textView3" />
-
-                <!--<Spinner-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:id="@+id/days"-->
-                    <!--android:layout_below="@+id/textView5"-->
-                    <!--android:layout_alignParentLeft="true"-->
-                    <!--android:layout_alignParentStart="true" />-->
-
-                <Spinner
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/timeE"
-                    android:layout_below="@+id/textView4"
-                    android:layout_alignLeft="@+id/timeS"
-                    android:layout_alignStart="@+id/timeS"
-                    android:layout_alignRight="@+id/timeS"
-                    android:layout_alignEnd="@+id/timeS" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Auto Generate Schedule"
-                    android:id="@+id/btnRandom"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:outlineProvider="background" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Start Time:"
-                    android:id="@+id/textView3"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true"
-                    android:textColor="@color/accent_material_dark" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="End Time:"
-                    android:id="@+id/textView4"
-                    android:layout_below="@+id/timeS"
-                    android:layout_centerHorizontal="true"
-                    android:textColor="@color/accent_material_dark" />
-
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-                    <!--android:text="Days of The Week"-->
-                    <!--android:id="@+id/textView5"-->
-                    <!--android:layout_below="@+id/timeE"-->
-                    <!--android:layout_alignParentLeft="true"-->
-                    <!--android:layout_alignParentStart="true" />-->
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Subject:"
-                    android:id="@+id/textView6"
-                    android:layout_below="@+id/timeE"
-                    android:layout_centerHorizontal="true"
-                    android:textColor="@color/accent_material_dark" />
-
-                <Spinner
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/subject"
-                    android:layout_below="@+id/textView6"
-                    android:layout_alignLeft="@+id/timeE"
-                    android:layout_alignStart="@+id/timeE"
-                    android:layout_alignRight="@+id/timeE"
-                    android:layout_alignEnd="@+id/timeE" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Clear Done"
-                android:id="@+id/btnDestroyD"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="87dp"
-                android:onClick="clearDone"
-                android:outlineProvider="background" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Clear Schedule"
-                android:id="@+id/btnDestroyS"
-                android:layout_alignTop="@+id/btnDestroyD"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:onClick="clearSchedule"
-                android:outlineProvider="background" />
-            <!--</group>-->
-        </RelativeLayout>
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     </FrameLayout>
 
@@ -168,7 +23,8 @@
          android:layout_gravity="left" instead. -->
     <!-- The drawer is given a fixed width in dp and extends the full height of
          the container. -->
-    <fragment android:id="@+id/navigation_drawer"
+    <fragment
+        android:id="@+id/navigation_drawer"
         android:name="com.example.emersontenorio.fredschedulebuilder.NavigationDrawerFragment"
         android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="match_parent"
