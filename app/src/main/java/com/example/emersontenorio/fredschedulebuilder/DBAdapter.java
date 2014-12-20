@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -406,6 +407,35 @@ public class DBAdapter {
         this.close();
 
         return list;
+    }
+
+
+    //edited by Derick
+    //Build a SQL statement that searches for the query
+    public Cursor getCourseMatches(String query, String[] columns) {
+        String selection = COL_TITLE + " LIKE ? '%" + query + "%'";
+        String[] selectionArgs = new String[] {query+"*"};
+
+        return query(query, selectionArgs, columns);
+    }
+
+    private Cursor query(String query, String[] selectionArgs, String[] columns) {
+        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+        builder.setTables(TABLE_NAME);
+
+//        Cursor cursor = builder.query(dbHelper.getReadableDatabase(),
+//                columns, selection, selectionArgs, null, null, null);
+
+
+        Cursor cursor = builder.query(dbHelper.getReadableDatabase(), columns , COL_TITLE + " LIKE '%"+ query+"%'",null, null, null, null);
+
+        if (cursor == null) {
+            return null;
+        } else if (!cursor.moveToFirst()) {
+            cursor.close();
+            return null;
+        }
+        return cursor;
     }
 
 }
