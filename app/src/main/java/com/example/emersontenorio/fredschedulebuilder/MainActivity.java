@@ -53,7 +53,8 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
+        fragmentManager
+                .beginTransaction()
                 .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
                 .commit();
     }
@@ -143,7 +144,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         }
     }
 
-    public void clearDone (View v) {
+    public void clearDone(View v) {
         myDB.open();
         for (int i = 0; i < myDB.countRows(); i++) {
             myDB.updateRecord(i, false);
@@ -153,7 +154,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         Toast.makeText(this, "All courses set as NOT DONE!", Toast.LENGTH_SHORT).show();
     }
 
-    public void clearSchedule (View v) {
+    public void deleteSchedule(View v) {
         myDB.open();
         for (int i = 0; i < myDB.countRows(); i++) {
             myDB.updateSchedule(i, false);

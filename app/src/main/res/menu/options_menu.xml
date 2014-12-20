@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:FredScheduleBuilder="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/search"
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/search"
         android:title="@string/search_title"
         android:icon="@drawable/ic_search"
-        FredScheduleBuilder:showAsAction="collapseActionView|ifRoom"
-        FredScheduleBuilder:actionViewClass="android.support.v7.widget.SearchView" />
+        android:showAsAction="collapseActionView|ifRoom"
+        android:actionViewClass="android.widget.SearchView"/>
 </menu>
