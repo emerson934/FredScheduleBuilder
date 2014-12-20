@@ -1,52 +1,28 @@
 package com.example.emersontenorio.fredschedulebuilder;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-
-
 public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
-
-    ListView list;
-
-    String[] menuTitles;
-    String[] menuDescriptions;
-    int[] images = {
-            R.drawable.csit2,
-            R.drawable.csit3,
-            R.drawable.csit4,
-            R.drawable.mobile1,
-            R.drawable.mobile3,
-            R.drawable.csit2,
-            R.drawable.csit3,
-            R.drawable.csit4,
-            R.drawable.mobile1,
-            R.drawable.mobile3,
-            R.drawable.csit2
-    };
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -57,156 +33,20 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
      */
     private CharSequence mTitle;
 
+    DBAdapter myDB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Image Downloading and Fetching
-//        new Thread() {
-//            public void run() {
-//                try {
-//                    URL url = new URL("http://wanderingoak.net/bridge.png");
-//                    HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-//
-//                    if (httpCon.getResponseCode() != 200) {
-//                        throw new Exception("Failed to Connect");
-//                    }
-//
-//                    InputStream is = httpCon.getInputStream();
-//                    final Bitmap bitmap = BitmapFactory.decodeStream(is);
-//                    MainActivity.this.runOnUiThread(new Runnable() {
-//                        public void run() {
-//                            ImageView iv = (ImageView) findViewById(R.id.main_image);
-//                            iv.setImageBitmap(bitmap);
-//                        }
-//                    });
-//                } catch (Exception e) {
-//                    Log.e("Image", " Failed to load image", e);
-//                }
-//            }
-//        }.start();
-        //Ending Downloading and Fetching Image
-
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
         // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        //Start test
-//        String[] daysA = new String[]{"M", "W", "F"};
-//        String[] daysB = new String[]{"M", "W", "F"};
-//        String[] daysC = new String[]{"M", "W", "F"};
-//        String[] daysD = new String[]{"T", "TH"};
-//        String[] daysE = new String[]{"T", "TH"};
-//        String[] daysF = new String[]{"T", "TH"};
-
-        final String[] allDays = new String[]{"M", "W", "F", "T", "TH"};
-
-//        final Course courseA = new Course(830, 1030, daysA);
-//        final Course courseB = new Course(1040, 1150, daysB);
-//        final Course courseC = new Course(1140, 1230, daysC);
-//        final Course courseD = new Course(830, 1030, daysD);
-//        final Course courseE = new Course(1040, 1150, daysE);
-//        final Course courseF = new Course(1140, 1230, daysF);
-//
-//        Button btnA = (Button) findViewById(R.id.btnA);
-//        btnA.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//                String resultA = Builder.addClass(courseA);
-//                Toast.makeText(getBaseContext(), resultA, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        Button btnB = (Button) findViewById(R.id.btnB);
-//        btnB.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//                String resultB = Builder.addClass(courseB);
-//                Toast.makeText(getBaseContext(), resultB, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        Button btnC = (Button) findViewById(R.id.btnC);
-//        btnC.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//                String resultC = Builder.addClass(courseC);
-//                Toast.makeText(getBaseContext(), resultC, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        Button btnD = (Button) findViewById(R.id.btnD);
-//        btnD.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//                String resultD = Builder.addClass(courseD);
-//                Toast.makeText(getBaseContext(), resultD, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        Button btnE = (Button) findViewById(R.id.btnE);
-//        btnE.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//                String resultE = Builder.addClass(courseE);
-//                Toast.makeText(getBaseContext(), resultE, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        Button btnF = (Button) findViewById(R.id.btnF);
-//        btnF.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//                String resultF = Builder.addClass(courseF);
-//                Toast.makeText(getBaseContext(), resultF, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-        final Context myContext = getBaseContext();
-
-        Button btnSearch = (Button) findViewById(R.id.btnSearch);
-        btnSearch.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-//                setContentView(R.layout.search_view);
-                //Creating ListView
-//                String[] listItems = new String[]{"Item 1","Item 2","Item 3","Item 4"};
-//                ArrayAdapter<String> adapter = ArrayAdapter.createFromResource(myContext, listItems.length, R.layout.);
-
-                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-                //intent.putExtra("key", value); //Optional parameters
-                MainActivity.this.startActivity(intent);
-
-//                Resources res = getResources();
-//                menuTitles = res.getStringArray(R.array.titles);
-//                menuDescriptions = res.getStringArray(R.array.descriptions);
-//
-//                list = (ListView) findViewById(R.id.listView);
-//
-//                search.VivzAdapter adapter = new search.VivzAdapter(myContext, menuTitles, images, menuDescriptions);
-//                list.setAdapter(adapter);
-            }
-        });
-
-        Button btnRandom = (Button) findViewById(R.id.btnRandom);
-        btnRandom.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                Builder builder = new Builder(getBaseContext());
-                builder.generateRandomSchedules(100, 2300, allDays, "CSIT");
-                ArrayList<Course> classes = builder.getCourses();
-                int scheduleSize = builder.getNumberCourses();
-                for (int i = 0; i < scheduleSize; i++) {
-                    if (classes.get(i).name != null){
-                        Toast.makeText(getBaseContext(), classes.get(i).name + " in: " + i, Toast.LENGTH_SHORT).show();
-                    } else{
-                        Toast.makeText(getBaseContext(), "Name null in: " + i, Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
-
-
-
-        //End of Test
-
+        myDB = new DBAdapter(this);
     }
 
     @Override
@@ -225,9 +65,6 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
                 break;
             case 2:
                 mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
                 break;
         }
     }
@@ -294,8 +131,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             return inflater.inflate(R.layout.fragment_main, container, false);//rootView;
         }
@@ -303,61 +139,34 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         @Override
         public void onAttach(Activity activity) {
             super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
+            ((MainActivity) activity).onSectionAttached(getArguments().getInt(ARG_SECTION_NUMBER));
         }
     }
 
+    public void clearDone (View v) {
+        myDB.open();
+        for (int i = 0; i < myDB.countRows(); i++) {
+            myDB.updateRecord(i, false);
+        }
+        myDB.close();
 
-    /**
-     * Created by Marcos Souza on 12/12/2014.
-     */
-//    public class UpdateApp extends AsyncTask<String, Integer, Bitmap> {
-//        @Override
-//        protected void onPreExecute() {
-//            //Setup
-//            super.onPreExecute();
-//        }
-//
-//        @Override
-//        protected Bitmap doInBackground(String... params) {
-//            try {
-//                URL url = new URL(params[0]);
-//                HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-//
-//                if (httpCon.getResponseCode() != 200) {
-//                    throw new Exception("Failed to Connect");
-//                }
-//
-//                InputStream is = httpCon.getInputStream();
-//                return BitmapFactory.decodeStream(is);
-//            } catch (Exception e) {
-//                Log.e("Image", " Failed to load image", e);
-//            }
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onProgressUpdate(Integer... values) {
-//            //Update a progress bar
-//            super.onProgressUpdate(values);
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Bitmap img) {
-//            ImageView iv = (ImageView) findViewById(R.id.main_image);
-//            if(iv!=null && img!=null){
-//                iv.setImageBitmap(img);
-//            }
-//        }
-//
-//        @Override
-//        protected void onCancelled() {
-//            //Handle what to do if you cancel this task
-//            //You should not be able to cancel this task anyway
-//            super.onCancelled();
-//        }
-//    }
+        Toast.makeText(this, "All courses set as NOT DONE!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void clearSchedule (View v) {
+        myDB.open();
+        for (int i = 0; i < myDB.countRows(); i++) {
+            myDB.updateSchedule(i, false);
+        }
+        myDB.close();
+
+        Toast.makeText(this, "All courses REMOVED from the Schedule!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDestroy() {
+        myDB.close();
+    }
 }
 
 
