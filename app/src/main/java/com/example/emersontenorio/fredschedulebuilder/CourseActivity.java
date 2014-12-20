@@ -54,7 +54,7 @@ public class CourseActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
@@ -66,9 +66,14 @@ public class CourseActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.schedule) {
+            Intent intent = new Intent(this, ScheduleActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.search) {
             return true;
         }
+
 
         return super.onOptionsItemSelected(item);
     }
